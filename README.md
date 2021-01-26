@@ -13,7 +13,7 @@ To get some changes from unicode repo `git pull upstream`
 __*NOBODY SHOULD DIRECTLY PUSH TO THE UNICODE REPO.*__
 
 There will be 2 branches
-- master
+- main
 - prod
 
 _Apart from the 2 branches above you can create as many branches as you want._
