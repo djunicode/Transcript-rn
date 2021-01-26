@@ -18,4 +18,4 @@ There will be 2 branches
 
 _Apart from the 2 branches above you can create as many branches as you want._
 
-__*NOBOBY SHOULD MAKE PULL REQUEST TO MASTER BRANCH. All changes should be made to prod.*__
+__*NOBOBY SHOULD MAKE PULL REQUEST TO MAIN BRANCH. All changes should be made to prod.*__
