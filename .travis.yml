@@ -13,6 +13,7 @@ env:
     - QEMU_AUDIO_DRV=none
 
 before_install:
+  - yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL"
   - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
   - sudo apt-get install -y nodejs
   - npm --version
@@ -40,8 +41,8 @@ android:
   - build-tools-$ANDROID_BUILD_TOOLS_VERSION
   - android-$ANDROID_API_LEVEL
   - android-$EMULATOR_API_LEVEL
-  - android-23
-  - android-27
+  #- android-23
+  #- android-27
   - extra-google-google_play_services
   - extra-google-m2repository
   - extra-android-m2repository
