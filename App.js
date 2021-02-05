@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import signup_student from './App/Screens/signup_student.js';
+import signup from './App/Screens/signup.js';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -11,8 +11,8 @@ export default function App(){
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="SignUpStudent">
-          <Stack.Screen name="SignUpStudent" component={signup_student} />
+        <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="SignUp">
+          <Stack.Screen name="SignUp" component={signup} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

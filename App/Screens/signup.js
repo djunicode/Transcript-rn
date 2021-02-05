@@ -5,7 +5,7 @@ import {colors} from '../res/colors';
 import Text_input from '../components/textInput';
 import { Switch } from 'react-native-paper';
 
-export default class signup_student extends Component {
+export default class signup extends Component {
     state = {
         username: '',
         password: '',
