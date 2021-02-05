@@ -22,6 +22,15 @@ export default class Text_input extends Component {
             borderColor: border
         }
     }
+
+    getTextColor = () =>{
+        let textColor = colors.student.textColor;
+        if(this.props.teacher){
+            textColor = colors.teacher.textColor;
+        }
+        return textColor
+    }
+
     render() {
         return (
             <View style={styles.textContainer}>
@@ -39,6 +48,7 @@ export default class Text_input extends Component {
                     underlineColor="transparent"
                     selectionColor = {this.props.teacher ? colors.teacher.color : colors.student.color}
                     underlineColorAndroid="transparent"
+                    theme={{ colors: { text: this.getTextColor() } }}
                 />
             </View>
         );
