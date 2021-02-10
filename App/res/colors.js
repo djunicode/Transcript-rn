@@ -7,6 +7,6 @@ export const colors = {
     teacher: {
         color: '#DBB0C4',
         textColor: 'white',
-        bgColor: 'black',
+        bgColor: '#212020',
     }
 }
