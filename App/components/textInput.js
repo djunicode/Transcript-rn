@@ -1,44 +1,45 @@
 import React, { Component } from 'react'
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { TextInput } from 'react-native-paper';
-import {colors} from '../res/colors';
+import {connect} from 'react-redux'
 
-export default class Text_input extends Component {
+class Text_input extends Component {
     state = {
         value: '',
     }
-    getTextStyle = () =>{
-        let bgColor = colors.student.bgColor;
-        let textColor = colors.student.textColor;
-        let border = colors.student.color;
-        if(this.props.teacher){
-            bgColor = colors.teacher.bgColor;
-            textColor = colors.teacher.textColor;
-            border = colors.teacher.color;
-        }
-        return {
-            backgroundColor: bgColor,
-            color: textColor,
-            borderColor: border
-        }
-    }
 
-    getTextColor = () =>{
-        let textColor = colors.student.textColor;
-        if(this.props.teacher){
-            textColor = colors.teacher.textColor;
-        }
-        return textColor
-    }
+    // getTextStyle = () =>{
+    //     let bgColor = colors.student.bgColor;
+    //     let textColor = colors.student.textColor;
+    //     let border = colors.student.color;
+    //     if(this.props.teacher){
+    //         bgColor = colors.teacher.bgColor;
+    //         textColor = colors.teacher.textColor;
+    //         border = colors.teacher.color;
+    //     }
+    //     return {
+    //         backgroundColor: bgColor,
+    //         color: textColor,
+    //         borderColor: border
+    //     }
+    // }
+
+    // getTextColor = () =>{
+    //     let textColor = colors.student.textColor;
+    //     if(this.props.teacher){
+    //         textColor = colors.teacher.textColor;
+    //     }
+    //     return textColor
+    // }
 
     render() {
         return (
             <View style={styles.textContainer}>
-                <Text style={[styles.label, this.getTextStyle()]}>
+                <Text style={[styles.label, {backgroundColor : this.props.color.backgroundColor , color  : this.props.color.text , borderColor : this.props.color.text_input_underline}]}>
                     {this.props.label}
                 </Text>
                 <TextInput
-                    style={[styles.inputStyle, this.getTextStyle()]}
+                    style={[styles.inputStyle, {backgroundColor : this.props.color.backgroundColor , color  : this.props.color.text , borderColor : this.props.color.text_input_underline}]}
                     onChangeText={text => {
                             this.props.callback(text, this.props.label);
                             this.setState({value: text});
@@ -46,14 +47,20 @@ export default class Text_input extends Component {
                     }
                     value={this.state.value}
                     underlineColor="transparent"
-                    selectionColor = {this.props.teacher ? colors.teacher.color : colors.student.color}
+                    selectionColor = {this.props.color.text_input_underline}
                     underlineColorAndroid="transparent"
-                    theme={{ colors: { text: this.getTextColor() } }}
+                    theme={{ colors: { text: this.props.color.text} }}
                 />
             </View>
         );
     }
 }
+
+const msp = state => ({
+    color : state.color
+})
+
+export default connect(msp , {})(Text_input)
 
 const styles = StyleSheet.create({
     container: {
@@ -82,7 +89,6 @@ const styles = StyleSheet.create({
     inputStyle:{
         backgroundColor: 'white',
         borderBottomWidth: 7,
-        borderColor: colors.student.color,
         borderRadius: 7,
         height: 30,
         marginBottom: 30,
