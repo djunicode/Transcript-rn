@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import Signup from './App/Screens/signup.js';
-import Login from './App/Screens/login.js';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import Signup from './App/Screens/signup.js';
+import Login from './App/Screens/login.js';
+import Error from './App/components/error_page.js'
 
 import {Provider} from 'react-redux'
 import Store from './App/redux/store.js'
@@ -19,9 +21,10 @@ export default function App(){
       <Provider store={Store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="SignUp">
+            <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Login">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Error" component={Error} />
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>
