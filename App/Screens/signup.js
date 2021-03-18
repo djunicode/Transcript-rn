@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { ImageBackground, StyleSheet, Text, View , Platform, TouchableOpacity, ScrollView, Keyboard, KeyboardAvoidingView, SafeAreaView} from "react-native";
 import { TextInput } from 'react-native-paper';
-import {colors} from '../res/colors';
 import Text_input from '../components/textInput';
 import { Switch } from 'react-native-paper';
+import {connect} from 'react-redux'
+import { change_color_theme_to_dark, change_color_theme_to_light } from '../redux/actions.js';
 
-export default class signup extends Component {
+class Signup extends Component {
     state = {
         username: '',
         password: '',
@@ -29,55 +30,56 @@ export default class signup extends Component {
 
     
 
-    getContainerStyle = () =>{
-        let bgColor = colors.student.bgColor;
-        let textColor = colors.student.textColor;
-        if(this.state.isSwitchOn){
-            bgColor = colors.teacher.bgColor;
-            textColor = colors.teacher.textColor;
-        }
-        return {
-            backgroundColor: bgColor,
-            color: textColor,
-        }
-    }
-    getCreateAccountStyle = () => {
-        let tcolor = colors.student.bgColor;
-        if(this.state.isSwitchOn){
-            tcolor = colors.teacher.bgColor;
-        }
-        return {
-            color: tcolor,
-        }
-    }
-    getButtonStyle = () => {
-        let bgColor = colors.student.color;
-        if(this.state.isSwitchOn){
-            bgColor = colors.teacher.color;
-        }
-        return {
-            backgroundColor: bgColor,
-        }
-    }
+    // getContainerStyle = () =>{
+    //     let bgColor = colors.student.bgColor;
+    //     let textColor = colors.student.textColor;
+    //     if(this.state.isSwitchOn){
+    //         bgColor = colors.teacher.bgColor;
+    //         textColor = colors.teacher.textColor;
+    //     }
+    //     return {
+    //         backgroundColor: bgColor,
+    //         color: textColor,
+    //     }
+    // }
+    // getCreateAccountStyle = () => {
+    //     let tcolor = colors.student.bgColor;
+    //     if(this.state.isSwitchOn){
+    //         tcolor = colors.teacher.bgColor;
+    //     }
+    //     return {
+    //         color: tcolor,
+    //     }
+    // }
+    // getButtonStyle = () => {
+    //     let bgColor = colors.student.color;
+    //     if(this.state.isSwitchOn){
+    //         bgColor = colors.teacher.color;
+    //     }
+    //     return {
+    //         backgroundColor: bgColor,
+    //     }
+    // }
 
     render() {
+        //console.log(this.props.color.text)
         return (
             <KeyboardAvoidingView
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 20}
                 enabled={Platform.OS === "ios" ? true : false}
             >        
-                <ImageBackground source={this.state.isSwitchOn ? require('../res/images/teacher.png') : require('../res/images/student.png')} style={{width: '100%', height: '100%'}}>        
-                    <SafeAreaView style={[ styles.container,this.getContainerStyle()]}>
+                <ImageBackground source={this.props.color.text==="#000" ? require('../res/images/light.png') : require('../res/images/dark.png')} style={{width: '100%', height: '100%'}}>        
+                    <SafeAreaView style={[ styles.container, {backgroundColor  : this.props.color.background_init , color:this.props.color.text}]}>
                             <View style={styles.textContainer}>
-                                <Text style={[styles.textSmall, this.getContainerStyle()]}>
+                                <Text style={[styles.textSmall, {backgroundColor  : this.props.color.background_init , color:this.props.color.text}]}>
                                     Having a tough time {'\n'}
                                     managing your documents?
                                 </Text>
-                                <Text style={[styles.textLarge, this.getContainerStyle()]}>
+                                <Text style={[styles.textLarge, {backgroundColor  : this.props.color.background_init , color:this.props.color.text}]}>
                                     You're at the
                                 </Text>
-                                <Text style={[{textDecorationLine: 'underline'}, styles.textLarge, this.getContainerStyle()]}>
+                                <Text style={[{textDecorationLine: 'underline'}, styles.textLarge, {backgroundColor  : this.props.color.background_init , color:this.props.color.text}]}>
                                     right place
                                 </Text>
                             </View>
@@ -87,19 +89,10 @@ export default class signup extends Component {
                                 <Text_input label="CONFIRM PASSWORD" callback={this.callback} teacher={this.state.isSwitchOn}/>
                             </View>
                             <View style={{flex: 3, paddingTop: '30%'}}>
-                                <TouchableOpacity onPress={() => console.log("Pressed")} style={[styles.buttonContainer, this.getButtonStyle()]}>
-                                    <Text style = {[styles.textSmall, this.getCreateAccountStyle()]}>Create my account</Text>
+                                <TouchableOpacity onPress={()=>{this.props.change_color_theme_to_light({})}} style={[styles.buttonContainer, {backgroundColor : this.props.color.button}]}>
+                                    <Text style = {[styles.textSmall, {color : this.props.color.text}]}>Create my account</Text>
                                 </TouchableOpacity>
-                                <View style={styles.switch}>
-                                    <View style={{alignSelf: 'flex-end', alignItems: 'center', padding: '5%'}}>
-                                        <Switch color={colors.student.color} value={this.state.isSwitchOn} onValueChange={this.onToggleSwitch} />
-                                        {this.state.isSwitchOn ? (
-                                            <Text style={this.getContainerStyle()}>I'm a teacher</Text>
-                                        ):(
-                                            <Text style={this.getContainerStyle()}>I'm a student</Text>
-                                        )}
-                                    </View>
-                                </View>
+                                
                             </View>
                         
                     </SafeAreaView>     
@@ -109,9 +102,13 @@ export default class signup extends Component {
     }
 }
 
+const msp = state => ({
+    color : state.color
+})
+export default connect(msp , {change_color_theme_to_dark , change_color_theme_to_light})(Signup)
+
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.student.bgColor,
         margin: 30,
         flex: 1,
         borderRadius: 30,
@@ -128,7 +125,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: '50%',
         alignSelf: 'center',
-        backgroundColor: colors.student.color,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
@@ -143,10 +139,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: 'dosis-regular',
         fontWeight: 'bold',
-        color: colors.student.textColor,
-    },
-    inputStyle:{
-        backgroundColor: colors.student.bgColor
     },
     accountButton:{
         width: '10%'
@@ -158,3 +150,18 @@ const styles = StyleSheet.create({
         alignContent: 'flex-end',
     }
 })
+
+/* 
+
+<View style={styles.switch}>
+                                    <View style={{alignSelf: 'flex-end', alignItems: 'center', padding: '5%'}}>
+                                        <Switch color={colors.student.color} value={this.state.isSwitchOn} onValueChange={this.onToggleSwitch} />
+                                        {this.state.isSwitchOn ? (
+                                            <Text style={this.getContainerStyle()}>I'm a teacher</Text>
+                                        ):(
+                                            <Text style={this.getContainerStyle()}>I'm a student</Text>
+                                        )}
+                                    </View>
+                                </View>
+
+*/

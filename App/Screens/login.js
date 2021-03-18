@@ -1,11 +1,12 @@
 import React from 'react'
 import { ImageBackground, StyleSheet, Text, View , Platform, TouchableOpacity, ScrollView, Keyboard, KeyboardAvoidingView, SafeAreaView} from "react-native";
-import {colors} from '../res/colors';
 import Text_input from '../components/textInput.js'
 import { Switch , Card} from 'react-native-paper';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
+import {connect} from 'react-redux'
+import { change_color_theme_to_dark, change_color_theme_to_light } from '../redux/actions.js';
 
-export default class Login extends React.Component{
+class Login extends React.Component{
 
     state = {
         username : "",
@@ -25,29 +26,29 @@ export default class Login extends React.Component{
         this.setState({student: !this.state.student});
     }
 
-    getbgcolor = () => {
-        if(this.state.student){
-            return {backgroundColor : colors.student.bgColor}
-        }else{
-            return {backgroundColor : colors.teacher.bgColor}
-        }
-    }
+    // getbgcolor = () => {
+    //     if(this.state.student){
+    //         return {backgroundColor : colors.student.bgColor}
+    //     }else{
+    //         return {backgroundColor : colors.teacher.bgColor}
+    //     }
+    // }
 
-    getButtonColor = () => {
-        if(this.state.student){
-            return {backgroundColor : colors.student.color}
-        }else{
-            return {backgroundColor : colors.teacher.color}
-        }
-    }
+    // getButtonColor = () => {
+    //     if(this.state.student){
+    //         return {backgroundColor : colors.student.color}
+    //     }else{
+    //         return {backgroundColor : colors.teacher.color}
+    //     }
+    // }
 
-    getTextColor = () => {
-        if(!this.state.student){
-            return {color : colors.student.textColor}
-        }else{
-            return {color : colors.teacher.textColor}
-        }
-    }
+    // getTextColor = () => {
+    //     if(!this.state.student){
+    //         return {color : colors.student.textColor}
+    //     }else{
+    //         return {color : colors.teacher.textColor}
+    //     }
+    // }
 
     render(){
         return(
@@ -56,14 +57,14 @@ export default class Login extends React.Component{
                 keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 20}
                 enabled={Platform.OS === "ios" ? true : false}
             >
-                <ImageBackground source={this.state.student ? require('../res/images/student.png') : require('../res/images/teacher.png')} style={styles.imagebgr}>
-                    <Card style={[styles.card , this.getbgcolor() ]}>
+                <ImageBackground source={this.props.color.text==="#000" ? require('../res/images/light.png') : require('../res/images/dark.png')} style={styles.imagebgr}>
+                    <Card style={[styles.card , {backgroundColor : this.props.color.background_init}]}>
                         <ScrollView>
                         {this.state.student?
                             (
                                 <View>
-                                    <Text style={[styles.textSmall , {color : 'black'}]}>Hello There Student</Text>
-                                    <Text style={[styles.textBig , {color : 'black'}]}>Welcome Back!</Text>
+                                    <Text style={[styles.textSmall , {color : this.props.color.text}]}>Hello There Student</Text>
+                                    <Text style={[styles.textBig , {color : this.props.color.text}]}>Welcome Back!</Text>
                                 </View>
                             ):
                             (
@@ -80,24 +81,13 @@ export default class Login extends React.Component{
                         </View>
 
                         <View style = {{marginTop:'10%'}}>
-                            <TouchableOpacity onPress={() => console.log("Login Pressed")} style={[styles.buttonContainer , this.getButtonColor()]}>
-                                        <Text style = {[styles.buttonText , this.getTextColor()]}>Login</Text>
+                            <TouchableOpacity onPress={() => {this.props.change_color_theme_to_light({})}} style={[styles.buttonContainer , {backgroundColor : this.props.color.button}]}>
+                                        <Text style = {[styles.buttonText , {color:this.props.color.text}]}>Login</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => console.log("Create Account Pressed")} style={[styles.buttonContainer , this.getButtonColor()]}>
-                                        <Text style = {[styles.buttonText , this.getTextColor()]}>Create Account</Text>
+                            <TouchableOpacity onPress={() => {this.props.change_color_theme_to_dark({})}} style={[styles.buttonContainer , {backgroundColor : this.props.color.button}]}>
+                                        <Text style = {[styles.buttonText , {color:this.props.color.text}]}>Create Account</Text>
                             </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.switch}>
-                            <View style={{alignSelf: 'flex-end', alignItems: 'center', padding: '5%'}}>
-                                <Switch color={colors.teacher.color} value={!this.state.student} onValueChange={this.onToggleSwitch} />
-                                {!this.state.student ? (
-                                    <Text style={{color:'white'}}>I'm a teacher</Text>
-                                ):(
-                                    <Text style={{color:'black'}}>I'm a student</Text>
-                                )}
-                                </View>
                         </View>
 
                         </ScrollView>
@@ -107,8 +97,12 @@ export default class Login extends React.Component{
             </KeyboardAvoidingView>
         )
     }
-
 }
+
+const msp = state => ({
+    color : state.color
+})
+export default connect(msp,{change_color_theme_to_dark , change_color_theme_to_light})(Login)
 
 const styles = StyleSheet.create({
     imagebgr:{
@@ -144,7 +138,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: '50%',
         alignSelf: 'center',
-        backgroundColor: colors.student.color,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
@@ -161,3 +154,18 @@ const styles = StyleSheet.create({
         alignContent: 'flex-end',
     }
 })
+
+/*
+
+<View style={styles.switch}>
+                            <View style={{alignSelf: 'flex-end', alignItems: 'center', padding: '5%'}}>
+                                <Switch color={colors.teacher.color} value={!this.state.student} onValueChange={this.onToggleSwitch} />
+                                {!this.state.student ? (
+                                    <Text style={{color:'white'}}>I'm a teacher</Text>
+                                ):(
+                                    <Text style={{color:'black'}}>I'm a student</Text>
+                                )}
+                                </View>
+                        </View>
+
+*/
