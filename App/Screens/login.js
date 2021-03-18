@@ -26,6 +26,10 @@ class Login extends React.Component{
         this.setState({student: !this.state.student});
     }
 
+    go_to_signup = () => {
+        this.props.navigation.navigate('SignUp')
+    }
+
     // getbgcolor = () => {
     //     if(this.state.student){
     //         return {backgroundColor : colors.student.bgColor}
@@ -85,7 +89,7 @@ class Login extends React.Component{
                                         <Text style = {[styles.buttonText , {color:this.props.color.text}]}>Login</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => {this.props.change_color_theme_to_dark({})}} style={[styles.buttonContainer , {backgroundColor : this.props.color.button}]}>
+                            <TouchableOpacity onPress={this.go_to_signup} style={[styles.buttonContainer , {backgroundColor : this.props.color.button}]}>
                                         <Text style = {[styles.buttonText , {color:this.props.color.text}]}>Create Account</Text>
                             </TouchableOpacity>
                         </View>
@@ -102,6 +106,7 @@ class Login extends React.Component{
 const msp = state => ({
     color : state.color
 })
+
 export default connect(msp,{change_color_theme_to_dark , change_color_theme_to_light})(Login)
 
 const styles = StyleSheet.create({

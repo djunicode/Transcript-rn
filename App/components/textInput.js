@@ -49,7 +49,7 @@ class Text_input extends Component {
                     underlineColor="transparent"
                     selectionColor = {this.props.color.text_input_underline}
                     underlineColorAndroid="transparent"
-                    theme={{ colors: { text: this.props.color.text} }}
+                    theme={{ colors: { text: this.props.color.text , underlineColor:'transparent' , primary: this.props.color.button} }}
                 />
             </View>
         );

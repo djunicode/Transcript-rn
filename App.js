@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Signup from './App/Screens/signup.js';
 import Login from './App/Screens/login.js';
 import Error from './App/components/error_page.js'
+import Settings from './App/Screens/settings.js'
 
 import {Provider} from 'react-redux'
 import Store from './App/redux/store.js'
@@ -21,10 +22,10 @@ export default function App(){
       <Provider store={Store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Login">
+            <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Settings">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Error" component={Error} />
+              <Stack.Screen name="Settings" component={Settings}/>
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>
