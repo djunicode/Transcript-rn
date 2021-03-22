@@ -6,17 +6,22 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Signup from './App/Screens/signup.js';
 import Login from './App/Screens/login.js';
-import Error from './App/components/error_page.js';
+
+import Error from './App/components/error_page.js'
+import Settings from './App/Screens/settings.js'
 import Transcripts from './App/Screens/Transcripts';
 import Lor from './App/Screens/LOR/Lor';
 import Sop from './App/Screens/Sop';
 import Profile from './App/Screens/Profile';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+
 import {Provider} from 'react-redux';
 import Store from './App/redux/store.js';
 import {persistor} from './App/redux/store.js';
 import {PersistGate} from 'redux-persist/integration/react';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -61,12 +66,10 @@ export default function App() {
       <Provider store={Store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{headerShown: false}}
-              initialRouteName="Login">
+            <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Settings">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Error" component={Error} />
+              <Stack.Screen name="Settings" component={Settings}/>
               <Stack.Screen name="Home" component={Home} />
             </Stack.Navigator>
           </NavigationContainer>

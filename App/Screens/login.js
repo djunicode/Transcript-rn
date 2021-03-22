@@ -35,6 +35,7 @@ class Login extends React.Component {
       this.setState({username: input});
     } else if (label === 'PASSWORD') {
       this.setState({password: input});
+
     }
   };
 
@@ -158,13 +159,12 @@ class Login extends React.Component {
   }
 }
 
-const msp = (state) => ({
-  color: state.color,
-});
-export default connect(msp, {
-  change_color_theme_to_dark,
-  change_color_theme_to_light,
-})(Login);
+const msp = state => ({
+    color : state.color
+})
+
+export default connect(msp,{change_color_theme_to_dark , change_color_theme_to_light})(Login)
+
 
 const styles = StyleSheet.create({
   imagebgr: {
