@@ -26,7 +26,7 @@ class SemesterUploadMarksheet extends Component {
           ]}>
           <Text style={styles.uploadedText}>{this.state.uploadedText}</Text>
           <Button
-            contentStyle={{height: hp('4%')}}
+            contentStyle={{height: hp('2.5%')}}
             style={[
               styles.button,
               {backgroundColor: this.props.color.background_inner},
@@ -49,14 +49,12 @@ export default connect(msp, {})(SemesterUploadMarksheet);
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: hp('1%'),
+    marginTop: hp('0.2%'),
     marginHorizontal: wp('10%'),
-    height: hp('10%'),
+    height: hp('8.5%'),
   },
   text: {
-    backgroundColor: 'yellow',
-
-    flex: 1,
+    flex: 0.7,
     fontWeight: 'bold',
     fontSize: 17,
   },
@@ -67,6 +65,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     alignContent: 'flex-end',
     alignItems: 'flex-end',
+    bottom: 3,
   },
   uploadContainer: {
     flexDirection: 'row',

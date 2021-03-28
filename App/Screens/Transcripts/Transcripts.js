@@ -7,8 +7,7 @@ import {
 import {connect} from 'react-redux';
 import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import {TouchableOpacity} from 'react-native-gesture-handler';
 const Transcripts = (props) => {
   return (
     <View style={styles.container}>
@@ -28,10 +27,26 @@ const Transcripts = (props) => {
           My Dashboard
         </Text>
       </View>
-      <View style={{marginLeft: 20, marginTop: hp('2%'), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+      <View
+        style={{
+          marginLeft: 20,
+          marginTop: hp('2%'),
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <Text style={{fontSize: 30}}>Transcripts</Text>
-        <TouchableOpacity onPress={() => {props.navigation.navigate("Upload Marksheet")}} style={{backgroundColor: props.color.background_inner, borderRadius: 5, marginRight: wp("10%"), padding: 3}}>
-            <Text>Upload Marksheets</Text>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Upload Marksheet');
+          }}
+          style={{
+            backgroundColor: props.color.background_inner,
+            borderRadius: 5,
+            marginRight: wp('10%'),
+            padding: 3,
+          }}>
+          <Text>Upload Marksheets</Text>
         </TouchableOpacity>
       </View>
       <View

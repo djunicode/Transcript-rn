@@ -7,9 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Signup from './App/Screens/signup.js';
 import Login from './App/Screens/login.js';
 
-import Error from './App/components/error_page.js';
 import Settings from './App/Screens/settings.js';
-import Transcripts from './App/Screens/Transcripts';
 import Lor from './App/Screens/LOR/Lor';
 import Sop from './App/Screens/Sop';
 import Profile from './App/Screens/Profile';
@@ -21,7 +19,7 @@ import {Provider} from 'react-redux';
 import Store from './App/redux/store.js';
 import {persistor} from './App/redux/store.js';
 import {PersistGate} from 'redux-persist/integration/react';
-import uploadMarksheet from './App/Screens/Transcripts/uploadMarksheet.js';
+import TranscriptNavigation from './App/Screens/Transcripts/navigation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,7 +50,7 @@ const Home = () => {
         inactiveBackgroundColor: 'white',
         style: {borderTopWidth: 0},
       }}>
-      <Tab.Screen name="Transcripts" component={Transcripts} />
+      <Tab.Screen name="Transcripts" component={TranscriptNavigation} />
       <Tab.Screen name="SOP" component={Sop} />
       <Tab.Screen name="LOR" component={Lor} />
       <Tab.Screen name="Profile" component={Profile} />
@@ -68,15 +66,11 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Settings">
+              initialRouteName="Home">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen
-                name="Upload Marksheet"
-                component={uploadMarksheet}
-              />
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Button} from 'react-native-paper';
+
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -42,6 +44,15 @@ class uploadMarksheet extends Component {
           <SemesterUploadMarksheet num={'VII'} />
           <SemesterUploadMarksheet num={'VIII'} />
         </View>
+        <Button
+          style={[
+            styles.button,
+            {backgroundColor: this.props.color.background_inner},
+          ]}
+          mode="contained"
+          onPress={() => console.log('Pressed')}>
+          Save Changes
+        </Button>
       </View>
     );
   }
@@ -57,5 +68,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  button: {
+    width: wp('50%'),
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
 });
