@@ -6,13 +6,17 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Signup from './App/Screens/signup.js';
 import Login from './App/Screens/login.js';
+
 import Error from './App/components/error_page.js';
-import Transcripts from './App/Screens/Transcripts/Transcripts';
+import Settings from './App/Screens/settings.js';
+import Transcripts from './App/Screens/Transcripts';
 import Lor from './App/Screens/LOR/Lor';
 import Sop from './App/Screens/Sop';
 import Profile from './App/Screens/Profile';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+
 import {Provider} from 'react-redux';
 import Store from './App/redux/store.js';
 import {persistor} from './App/redux/store.js';
@@ -29,7 +33,7 @@ const Home = () => {
         tabBarIcon: ({color}) => {
           if (route.name == 'Transcripts') {
             return (
-              <Ionicons name="newspaper-outline" size={25} color={color}/>
+              <Ionicons name="newspaper-outline" size={25} color={color} />
             );
           } else if (route.name == 'SOP') {
             return (
@@ -64,12 +68,15 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Login">
+              initialRouteName="Settings">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Error" component={Error} />
+              <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="Upload Marksheet" component={uploadMarksheet} />
+              <Stack.Screen
+                name="Upload Marksheet"
+                component={uploadMarksheet}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>

@@ -7,6 +7,8 @@ const userReducer = (state = {} , action) => {
     switch(action.type){
         case UPDATE_USER_DEETS:
             return merge(state , {user_info:action.payload})
+        case CLEAR_USER_DATA:
+            return ({})
         default:
             return state
     }
