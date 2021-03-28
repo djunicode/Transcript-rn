@@ -7,7 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Signup from './App/Screens/signup.js';
 import Login from './App/Screens/login.js';
 import Error from './App/components/error_page.js';
-import Transcripts from './App/Screens/Transcripts';
+import Transcripts from './App/Screens/Transcripts/Transcripts';
 import Lor from './App/Screens/LOR/Lor';
 import Sop from './App/Screens/Sop';
 import Profile from './App/Screens/Profile';
@@ -17,6 +17,7 @@ import {Provider} from 'react-redux';
 import Store from './App/redux/store.js';
 import {persistor} from './App/redux/store.js';
 import {PersistGate} from 'redux-persist/integration/react';
+import uploadMarksheet from './App/Screens/Transcripts/uploadMarksheet.js';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,13 +29,13 @@ const Home = () => {
         tabBarIcon: ({color}) => {
           if (route.name == 'Transcripts') {
             return (
-              <Ionicons name="newspaper-outline" size={25} color={color} />
+              <Ionicons name="newspaper-outline" size={25} color={color}/>
             );
-          } else if (route.name == 'Sop') {
+          } else if (route.name == 'SOP') {
             return (
               <Ionicons name="documents-outline" size={25} color={color} />
             );
-          } else if (route.name == 'Lor') {
+          } else if (route.name == 'LOR') {
             return <Entypo name="text-document" size={25} color={color} />;
           } else {
             return <Ionicons name="settings-outline" size={25} color={color} />;
@@ -48,8 +49,8 @@ const Home = () => {
         style: {borderTopWidth: 0},
       }}>
       <Tab.Screen name="Transcripts" component={Transcripts} />
-      <Tab.Screen name="Sop" component={Sop} />
-      <Tab.Screen name="Lor" component={Lor} />
+      <Tab.Screen name="SOP" component={Sop} />
+      <Tab.Screen name="LOR" component={Lor} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
@@ -68,6 +69,7 @@ export default function App() {
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Error" component={Error} />
               <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Upload Marksheet" component={uploadMarksheet} />
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>
