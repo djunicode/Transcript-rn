@@ -7,9 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Signup from './App/Screens/signup.js';
 import Login from './App/Screens/login.js';
 
-import Error from './App/components/error_page.js'
-import Settings from './App/Screens/settings.js'
-import Transcripts from './App/Screens/Transcripts';
+import Settings from './App/Screens/settings.js';
 import Lor from './App/Screens/LOR/Lor';
 import Sop from './App/Screens/Sop';
 import Profile from './App/Screens/Profile';
@@ -21,7 +19,7 @@ import {Provider} from 'react-redux';
 import Store from './App/redux/store.js';
 import {persistor} from './App/redux/store.js';
 import {PersistGate} from 'redux-persist/integration/react';
-
+import TranscriptNavigation from './App/Screens/Transcripts/navigation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,11 +33,11 @@ const Home = () => {
             return (
               <Ionicons name="newspaper-outline" size={25} color={color} />
             );
-          } else if (route.name == 'Sop') {
+          } else if (route.name == 'SOP') {
             return (
               <Ionicons name="documents-outline" size={25} color={color} />
             );
-          } else if (route.name == 'Lor') {
+          } else if (route.name == 'LOR') {
             return <Entypo name="text-document" size={25} color={color} />;
           } else {
             return <Ionicons name="settings-outline" size={25} color={color} />;
@@ -52,9 +50,9 @@ const Home = () => {
         inactiveBackgroundColor: 'white',
         style: {borderTopWidth: 0},
       }}>
-      <Tab.Screen name="Transcripts" component={Transcripts} />
-      <Tab.Screen name="Sop" component={Sop} />
-      <Tab.Screen name="Lor" component={Lor} />
+      <Tab.Screen name="Transcripts" component={TranscriptNavigation} />
+      <Tab.Screen name="SOP" component={Sop} />
+      <Tab.Screen name="LOR" component={Lor} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
@@ -66,10 +64,12 @@ export default function App() {
       <Provider store={Store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Settings">
+            <Stack.Navigator
+              screenOptions={{headerShown: false}}
+              initialRouteName="Home">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Settings" component={Settings}/>
+              <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Home" component={Home} />
             </Stack.Navigator>
           </NavigationContainer>
