@@ -7,8 +7,10 @@ import {
 import {connect} from 'react-redux';
 import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
 const Lor = (props) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View
@@ -28,7 +30,7 @@ const Lor = (props) => {
         </Text>
       </View>
       <View style={{marginLeft: 20, marginTop: hp('2%')}}>
-        <Text style={{fontSize: 30}}>LORs</Text>
+        <Text style={{fontSize: 30, color: props.color.text}}>LORs</Text>
       </View>
       <View
         style={{
@@ -87,6 +89,7 @@ const Lor = (props) => {
         size={44}
         color={props.color.background_inner}
         style={{marginHorizontal: wp('44%')}}
+        onPress={() => navigation.navigate('NewLor')}
       />
       <Text
         style={{textAlign: 'center', fontSize: 25, color: props.color.text}}>
