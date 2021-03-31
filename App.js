@@ -11,6 +11,10 @@ import Settings from './App/Screens/settings.js';
 import Lor from './App/Screens/LOR/Lor';
 import Sop from './App/Screens/Sop';
 import Profile from './App/Screens/Profile';
+import NewLor from './App/Screens/LOR/NewLor';
+import Template1 from './App/Screens/LOR/Template1';
+import Template2 from './App/Screens/LOR/Template2';
+import Template3 from './App/Screens/LOR/Template3';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -71,6 +75,10 @@ export default function App() {
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="NewLor" component={NewLor} />
+              <Stack.Screen name="Template1" component={Template1} />
+              <Stack.Screen name="Template2" component={Template2} />
+              <Stack.Screen name="Template3" component={Template3} />
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>
