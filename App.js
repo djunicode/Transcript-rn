@@ -25,42 +25,52 @@ import {persistor} from './App/redux/store.js';
 import {PersistGate} from 'redux-persist/integration/react';
 import TranscriptNavigation from './App/Screens/Transcripts/navigation';
 
+import {connect} from 'react-redux'
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const Home = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({color}) => {
-          if (route.name == 'Transcripts') {
-            return (
-              <Ionicons name="newspaper-outline" size={25} color={color} />
-            );
-          } else if (route.name == 'SOP') {
-            return (
-              <Ionicons name="documents-outline" size={25} color={color} />
-            );
-          } else if (route.name == 'LOR') {
-            return <Entypo name="text-document" size={25} color={color} />;
-          } else {
-            return <Ionicons name="settings-outline" size={25} color={color} />;
-          }
-        },
-      })}
-      tabBarOptions={{
-        activeBackgroundColor: '#9AB3FF',
-        activeTintColor: 'black',
-        inactiveBackgroundColor: 'white',
-        style: {borderTopWidth: 0},
-      }}>
-      <Tab.Screen name="Transcripts" component={TranscriptNavigation} />
-      <Tab.Screen name="SOP" component={Sop} />
-      <Tab.Screen name="LOR" component={Lor} />
-      <Tab.Screen name="Profile" component={Profile} />
-    </Tab.Navigator>
-  );
-};
+class Home extends React.Component{
+  render(){
+    //console.log(this.props.color)
+    return (
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({color}) => {
+            if (route.name == 'Transcripts') {
+              return (
+                <Ionicons name="newspaper-outline" size={25} color={this.props.color.text} />
+              );
+            } else if (route.name == 'SOP') {
+              return (
+                <Ionicons name="documents-outline" size={25} color={this.props.color.text} />
+              );
+            } else if (route.name == 'LOR') {
+              return <Entypo name="text-document" size={25} color={this.props.color.text} />;
+            } else {
+              return <Ionicons name="settings-outline" size={25} color={this.props.color.text} />;
+            }
+          },
+        })}
+        tabBarOptions={{
+          activeBackgroundColor: this.props.color.button,
+          activeTintColor: 'black',
+          inactiveBackgroundColor: this.props.color.background_init,
+          style: {borderTopWidth: 0},
+        }}>
+        <Tab.Screen name="Transcripts" component={TranscriptNavigation} />
+        <Tab.Screen name="SOP" component={Sop} />
+        <Tab.Screen name="LOR" component={Lor} />
+        <Tab.Screen name="Settings" component={Settings} />
+      </Tab.Navigator>
+    );
+  }
+}
+const msp = state => ({
+  color : state.color
+})
+
+const HH = connect(msp , {})(Home)
 
 export default function App() {
   return (
@@ -70,11 +80,11 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Home">
+              initialRouteName="Login">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Settings" component={Settings} />
-              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Home" component={HH} />
               <Stack.Screen name="NewLor" component={NewLor} />
               <Stack.Screen name="Template1" component={Template1} />
               <Stack.Screen name="Template2" component={Template2} />

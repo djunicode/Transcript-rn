@@ -43,30 +43,6 @@ class Login extends React.Component {
     this.setState({student: !this.state.student});
   };
 
-  // getbgcolor = () => {
-  //     if(this.state.student){
-  //         return {backgroundColor : colors.student.bgColor}
-  //     }else{
-  //         return {backgroundColor : colors.teacher.bgColor}
-  //     }
-  // }
-
-  // getButtonColor = () => {
-  //     if(this.state.student){
-  //         return {backgroundColor : colors.student.color}
-  //     }else{
-  //         return {backgroundColor : colors.teacher.color}
-  //     }
-  // }
-
-  // getTextColor = () => {
-  //     if(!this.state.student){
-  //         return {color : colors.student.textColor}
-  //     }else{
-  //         return {color : colors.teacher.textColor}
-  //     }
-  // }
-
   render() {
     return (
       <KeyboardAvoidingView
@@ -124,7 +100,6 @@ class Login extends React.Component {
               <View style={{marginTop: '10%'}}>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.change_color_theme_to_light({});
                     this.props.navigation.navigate('Home');
                   }}
                   style={[
@@ -138,9 +113,7 @@ class Login extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  onPress={() => {
-                    this.props.change_color_theme_to_dark({});
-                  }}
+                  onPress={() => {}}
                   style={[
                     styles.buttonContainer,
                     {backgroundColor: this.props.color.button},
@@ -163,7 +136,7 @@ const msp = state => ({
     color : state.color
 })
 
-export default connect(msp,{change_color_theme_to_dark , change_color_theme_to_light})(Login)
+export default connect(msp,{})(Login)
 
 
 const styles = StyleSheet.create({

@@ -8,27 +8,13 @@ import {connect} from 'react-redux';
 import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import Header from './../../components/header'
 
 const Lor = (props) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          backgroundColor: props.color.background_inner,
-          height: hp('13%'),
-        }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: hp('6%'),
-            fontSize: 32,
-            fontFamily: 'dosis-regular',
-            color: props.color.text,
-          }}>
-          My Dashboard
-        </Text>
-      </View>
+      <Header title="My Dashboard"/>
       <View style={{marginLeft: 20, marginTop: hp('2%')}}>
         <Text style={{fontSize: 30, color: props.color.text}}>LORs</Text>
       </View>
