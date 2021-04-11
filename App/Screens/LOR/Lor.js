@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -8,15 +8,15 @@ import {connect} from 'react-redux';
 import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
-import Header from './../../components/header'
+import Header from './../../components/header';
 
 const Lor = (props) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <Header title="My Dashboard"/>
+    <ScrollView style={{flex: 1, backgroundColor: props.color.background_init}}>
+      <Header title="My Dashboard" />
       <View style={{marginLeft: 20, marginTop: hp('2%')}}>
-        <Text style={{fontSize: 30, color: props.color.text}}>LORs</Text>
+        <Text style={{fontSize: wp('10%'), color: props.color.text}}>LORs</Text>
       </View>
       <View
         style={{
@@ -72,16 +72,20 @@ const Lor = (props) => {
       </View>
       <AntDesign
         name="pluscircle"
-        size={44}
-        color={props.color.background_inner}
+        size={wp('12%')}
+        color={props.color.button}
         style={{marginHorizontal: wp('44%')}}
         onPress={() => navigation.navigate('NewLor')}
       />
       <Text
-        style={{textAlign: 'center', fontSize: 25, color: props.color.text}}>
+        style={{
+          textAlign: 'center',
+          fontSize: wp('8%'),
+          color: props.color.text,
+        }}>
         Add New LOR
       </Text>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -91,9 +95,4 @@ const msp = (state) => ({
 
 export default connect(msp, {})(Lor);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
+const styles = StyleSheet.create({});

@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Card} from 'react-native-paper';
 import {
   heightPercentageToDP,
@@ -13,18 +13,18 @@ import {connect} from 'react-redux';
 const Template1 = (props) => {
   const navigation = useNavigation();
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1, backgroundColor: props.color.background_init}}>
       <Card
         style={{
           margin: 10,
           borderRadius: 25,
-          backgroundColor: props.color.background_inner,
+          backgroundColor: props.color.button,
         }}>
         <Card.Content>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text
               style={{
-                fontSize: 30,
+                fontSize: widthPercentageToDP('9%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -32,7 +32,7 @@ const Template1 = (props) => {
             </Text>
             <Entypo
               name="cross"
-              size={30}
+              size={widthPercentageToDP('10%')}
               color={props.color.text}
               onPress={() => {
                 navigation.goBack();
@@ -42,7 +42,7 @@ const Template1 = (props) => {
           <View style={{marginTop: heightPercentageToDP('2%')}}>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -65,7 +65,7 @@ const Template1 = (props) => {
           <View style={{marginTop: heightPercentageToDP('2%')}}>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -75,7 +75,7 @@ const Template1 = (props) => {
           <View style={{marginTop: heightPercentageToDP('4%')}}>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -83,15 +83,15 @@ const Template1 = (props) => {
             </Text>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
-              Designation-Departmen:t
+              Designation-Department
             </Text>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -99,7 +99,7 @@ const Template1 = (props) => {
             </Text>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -107,19 +107,23 @@ const Template1 = (props) => {
             </Text>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: widthPercentageToDP('5.%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
               E-mail ID:
             </Text>
           </View>
-          <View style={{marginLeft: widthPercentageToDP('80%')}}>
-            <MaterialIcons name="done" size={30} color={props.color.text} />
+          <View style={{marginLeft: widthPercentageToDP('75%')}}>
+            <MaterialIcons
+              name="done"
+              size={widthPercentageToDP('10%')}
+              color={props.color.text}
+            />
           </View>
         </Card.Content>
       </Card>
-    </View>
+    </ScrollView>
   );
 };
 
