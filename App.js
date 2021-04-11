@@ -25,13 +25,13 @@ import {persistor} from './App/redux/store.js';
 import {PersistGate} from 'redux-persist/integration/react';
 import TranscriptNavigation from './App/Screens/Transcripts/navigation';
 
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-class Home extends React.Component{
-  render(){
+class Home extends React.Component {
+  render() {
     //console.log(this.props.color)
     return (
       <Tab.Navigator
@@ -39,16 +39,36 @@ class Home extends React.Component{
           tabBarIcon: ({color}) => {
             if (route.name == 'Transcripts') {
               return (
-                <Ionicons name="newspaper-outline" size={25} color={this.props.color.text} />
+                <Ionicons
+                  name="newspaper-outline"
+                  size={25}
+                  color={this.props.color.text}
+                />
               );
             } else if (route.name == 'SOP') {
               return (
-                <Ionicons name="documents-outline" size={25} color={this.props.color.text} />
+                <Ionicons
+                  name="documents-outline"
+                  size={25}
+                  color={this.props.color.text}
+                />
               );
             } else if (route.name == 'LOR') {
-              return <Entypo name="text-document" size={25} color={this.props.color.text} />;
+              return (
+                <Entypo
+                  name="text-document"
+                  size={25}
+                  color={this.props.color.text}
+                />
+              );
             } else {
-              return <Ionicons name="settings-outline" size={25} color={this.props.color.text} />;
+              return (
+                <Ionicons
+                  name="settings-outline"
+                  size={25}
+                  color={this.props.color.text}
+                />
+              );
             }
           },
         })}
@@ -66,11 +86,11 @@ class Home extends React.Component{
     );
   }
 }
-const msp = state => ({
-  color : state.color
-})
+const msp = (state) => ({
+  color: state.color,
+});
 
-const HH = connect(msp , {})(Home)
+const HH = connect(msp, {})(Home);
 
 export default function App() {
   return (
