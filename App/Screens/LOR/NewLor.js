@@ -7,28 +7,13 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
+import Header from './../../components/header'
 
 const NewLor = (props) => {
   const navigation = useNavigation();
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          backgroundColor: props.color.background_inner,
-          height: heightPercentageToDP('13%'),
-        }}>
-        <Text
-          style={{
-            fontSize: 30,
-            textAlign: 'left',
-            marginTop: heightPercentageToDP('3%'),
-            marginLeft: widthPercentageToDP('5%'),
-            fontFamily: 'Dosis-Bold',
-            color: props.color.text,
-          }}>
-          LOR Template
-        </Text>
-      </View>
+    <View style={{flex: 1 , backgroundColor:props.color.background_init}}>
+      <Header title="LOR Template"/>
       <View>
         <Text
           style={{
@@ -151,6 +136,7 @@ const NewLor = (props) => {
               backgroundColor: props.color.background_inner,
             }}>
             <Button
+              style={{backgroundColor : props.color.button}}
               color={props.color.text}
               onPress={() => {
                 navigation.navigate('Template1');
@@ -166,6 +152,7 @@ const NewLor = (props) => {
               backgroundColor: props.color.background_inner,
             }}>
             <Button
+            style={{backgroundColor : props.color.button}}
               color={props.color.text}
               onPress={() => {
                 navigation.navigate('Template2');
@@ -181,6 +168,7 @@ const NewLor = (props) => {
               backgroundColor: props.color.background_inner,
             }}>
             <Button
+              style={{backgroundColor : props.color.button}}
               color={props.color.text}
               onPress={() => {
                 navigation.navigate('Template3');
@@ -207,7 +195,7 @@ const NewLor = (props) => {
             marginHorizontal: widthPercentageToDP('24%'),
             marginVertical: heightPercentageToDP('4%'),
           }}>
-          <Button color={props.color.text}>Write your own LOR</Button>
+          <Button style={{backgroundColor : props.color.button}} color={props.color.text}>Write your own LOR</Button>
         </View>
       </View>
     </View>

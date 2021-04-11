@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-paper';
 import Text_input from '../components/textInput';
 import { Switch , Card} from 'react-native-paper';
 import {connect} from 'react-redux'
-import { change_color_theme_to_dark, change_color_theme_to_light , store_signup_temp} from '../redux/actions.js';
+import { change_color_theme_to_dark, change_color_theme_to_light, store_signup_temp } from '../redux/actions.js';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -12,9 +12,9 @@ import {
 
 class Signup extends React.Component {
     state = {
-      email: '',
-      password: '',
-      confirm:'',
+      name: '',
+      sap: '',
+      contact:'',
       student: true,
     };
   
@@ -25,12 +25,12 @@ class Signup extends React.Component {
     }
   
     callback = (input, label) => {
-        if (label === 'EMAIL') {
-            this.setState({email: input});
-        }else if (label === 'PASSWORD') {
-            this.setState({password: input});
-        }else if(label === 'CONFIRM PASSWORD'){
-            this.setState({confirm: input})
+        if (label === 'NAME') {
+            this.setState({name: input});
+        }else if (label === 'SAP ID') {
+            this.setState({sap: input});
+        }else if(label === 'CONTACT'){
+            this.setState({contact: input})
         }
     };
   
@@ -39,11 +39,12 @@ class Signup extends React.Component {
     };
 
     next = () => {
-      this.props.store_signup_temp({'email' : this.state.email , 'password' : this.state.password , 're_password' : this.state.confirm})
-      this.props.navigation.navigate('SN1')
+      this.props.store_signup_temp({"name" : this.state.name , "sap_id" : this.state.sap , "contact_no" : this.state.contact})
+      this.props.navigation.navigate("SN2")
     }
   
     render() {
+      let toggle = this.props.color.gradient === "dark"
       return (
         <KeyboardAvoidingView style={{flex:1}}
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -64,21 +65,14 @@ class Signup extends React.Component {
               
                 {this.state.student ? (
                   <View>
-
-                    <Text
-                      style={[styles.textVerySmall, {color: this.props.color.text}]}>
-                      Having a tough time {'\n'}
-                      Managing your documents?
-                    </Text>
-
                     <Text
                       style={[styles.textSmall, {color: this.props.color.text}]}>
-                      You are at the
+                      Just a few
                     </Text>
 
                     <Text
                       style={[styles.textBig, {color: this.props.color.text}]}>
-                      Right place
+                      more steps ...
                     </Text>
                   </View>
                 ) : (
@@ -94,17 +88,17 @@ class Signup extends React.Component {
   
                 <View style={styles.text_input_container}>
                   <Text_input
-                    label="EMAIL"
+                    label="NAME"
                     callback={this.callback}
                     teacher={!this.state.student}
                   />
                   <Text_input
-                    label="PASSWORD"
+                    label="SAP ID"
                     callback={this.callback}
                     teacher={!this.state.student}
                   />
                   <Text_input
-                    label="CONFIRM PASSWORD"
+                    label="CONTACT"
                     callback={this.callback}
                     teacher={!this.state.student}
                   />
@@ -120,14 +114,6 @@ class Signup extends React.Component {
                     <Text
                       style={[styles.buttonText, {color: this.props.color.text}]}>
                       Next
-                    </Text>
-                  </TouchableOpacity>
-  
-                  <TouchableOpacity
-                    onPress={() => {this.props.navigation.navigate('Login')}}>
-                    <Text
-                      style={{color: this.props.color.text , alignSelf : 'center' , textDecorationLine: 'underline', marginTop : hp("2%") , fontSize:hp("2%")}}>
-                      Already have an account?
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -161,14 +147,14 @@ const styles = StyleSheet.create({
     textVerySmall: {
         fontSize: hp('2.2%'),
         fontFamily: 'dosis-regular',
-        paddingTop: '7%',
+        paddingTop: '9%',
         paddingHorizontal: '10%',
         fontWeight: '500',
     },
     textSmall: {
       fontSize: hp('3%'),
       fontFamily: 'dosis-regular',
-      paddingTop: '1%',
+      paddingTop: '11.8%',
       paddingHorizontal: '10%',
       fontWeight: '700',
     },
@@ -201,18 +187,3 @@ const styles = StyleSheet.create({
       alignContent : "flex-end",
   }
   });
-
-/* 
-
-<View style={styles.switch}>
-                                    <View style={{alignSelf: 'flex-end', alignItems: 'center', padding: '5%'}}>
-                                        <Switch color={colors.student.color} value={this.state.isSwitchOn} onValueChange={this.onToggleSwitch} />
-                                        {this.state.isSwitchOn ? (
-                                            <Text style={this.getContainerStyle()}>I'm a teacher</Text>
-                                        ):(
-                                            <Text style={this.getContainerStyle()}>I'm a student</Text>
-                                        )}
-                                    </View>
-                                </View>
-
-*/

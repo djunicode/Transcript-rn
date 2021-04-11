@@ -6,8 +6,14 @@ export const UPDATE_USER_DEETS = 'UPDATE_USER_DEETS'
 export const CHANGE_SIGN_STATUS = 'CHANGE_SIGN_STATUS'
 export const CHANGE_COLOR_THEME_TO_DARK = 'CHANGE_COLOR_THEME_TO_DARK'
 export const CHANGE_COLOR_THEME_TO_LIGHT = 'CHANGE_COLOR_THEME_TO_LIGHT'
+export const STORE_SIGNUP_TEMP = 'STORE_SIGNUP_TEMP'
 
 //action creators
+export const store_signup_temp = update => ({
+    type : STORE_SIGNUP_TEMP,
+    payload : update
+})
+
 export const clear_user_data = update => ({
     type : CLEAR_USER_DATA,
     payload : update

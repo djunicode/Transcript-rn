@@ -23,7 +23,10 @@ import {
   change_color_theme_to_light,
 } from '../redux/actions.js';
 
-class Login extends React.Component {
+
+
+
+class Forgot extends React.Component {
   state = {
     email: '',
     password: '',
@@ -77,7 +80,7 @@ class Login extends React.Component {
                   </Text>
                   <Text
                     style={[styles.textBig, {color: this.props.color.text}]}>
-                    Welcome Back!
+                    Forgot Password?
                   </Text>
                 </View>
               ) : (
@@ -97,45 +100,18 @@ class Login extends React.Component {
                   callback={this.callback}
                   teacher={!this.state.student}
                 />
-                <Text_input
-                  label="PASSWORD"
-                  callback={this.callback}
-                  teacher={!this.state.student}
-                />
               </View>
 
               <View style={{marginTop: '10%'}}>
                 <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.navigate('Home');
-                  }}
+                  onPress={() => {}}
                   style={[
                     styles.buttonContainer,
                     {backgroundColor: this.props.color.button},
                   ]}>
                   <Text
                     style={[styles.buttonText, {color: this.props.color.text}]}>
-                    Login
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {this.props.navigation.navigate('SignUp')}}
-                  style={[
-                    styles.buttonContainer,
-                    {backgroundColor: this.props.color.button},
-                  ]}>
-                  <Text
-                    style={[styles.buttonText, {color: this.props.color.text}]}>
-                    Create Account
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {this.props.navigation.navigate('Forgot')}}>
-                  <Text
-                    style={{color: this.props.color.text , alignSelf : 'center' , textDecorationLine: 'underline', marginTop : hp("2%") , fontSize:hp("2%")}}>
-                    Forgot Password?
+                    Confirm Email
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -151,7 +127,7 @@ const msp = state => ({
     color : state.color
 })
 
-export default connect(msp,{change_color_theme_to_light , change_color_theme_to_dark})(Login)
+export default connect(msp,{change_color_theme_to_light , change_color_theme_to_dark})(Forgot)
 
 
 const styles = StyleSheet.create({

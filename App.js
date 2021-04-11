@@ -15,6 +15,12 @@ import NewLor from './App/Screens/LOR/NewLor';
 import Template1 from './App/Screens/LOR/Template1';
 import Template2 from './App/Screens/LOR/Template2';
 import Template3 from './App/Screens/LOR/Template3';
+import Forgot from './App/Screens/forogt_password'
+import Signup_next_1 from './App/Screens/signup_next'
+import Signup_next_2 from './App/Screens/signup_next_2'
+
+import Test from './App/test_api'
+
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -80,7 +86,7 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Login">
+              initialRouteName="Test">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Settings" component={Settings} />
@@ -89,6 +95,10 @@ export default function App() {
               <Stack.Screen name="Template1" component={Template1} />
               <Stack.Screen name="Template2" component={Template2} />
               <Stack.Screen name="Template3" component={Template3} />
+              <Stack.Screen name="Forgot" component={Forgot} />
+              <Stack.Screen name="SN1" component={Signup_next_1} />
+              <Stack.Screen name="SN2" component={Signup_next_2} />
+              <Stack.Screen name="Test" component={Test} />
             </Stack.Navigator>
           </NavigationContainer>
         </PersistGate>

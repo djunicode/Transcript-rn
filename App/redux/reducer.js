@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux'
-import {CLEAR_USER_DATA , CHANGE_LOG_STATUS , CHANGE_SIGN_STATUS , CHANGE_COLOR_THEME_TO_DARK , CHANGE_COLOR_THEME_TO_LIGHT , UPDATE_USER_DEETS} from './actions.js'
+import {CLEAR_USER_DATA , CHANGE_LOG_STATUS , CHANGE_SIGN_STATUS , CHANGE_COLOR_THEME_TO_DARK , CHANGE_COLOR_THEME_TO_LIGHT , UPDATE_USER_DEETS, STORE_SIGNUP_TEMP} from './actions.js'
 
 const merge = (prev,next) => Object.assign({} , prev,next)
 
 const userReducer = (state = {} , action) => {
     switch(action.type){
+        case STORE_SIGNUP_TEMP:
+            return merge(state , action.payload)
         case UPDATE_USER_DEETS:
             return merge(state , {user_info:action.payload})
         case CLEAR_USER_DATA:
