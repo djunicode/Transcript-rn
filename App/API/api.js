@@ -5,6 +5,12 @@ const signup_api_url = base + "auth/users/"
 const login_api_url = base + "auth/jwt/create/"
 const reset_password_api_url = base + "auth/users/reset_password/"
 
+export const reset_password_api_call = async (email) => {
+    const response = await axios.post(reset_password_api_url , {"email" : email})
+    console.log(response.data)
+    return response
+}
+
 export const signup_api_call = async (obj) => {
     const response = await axios.post(signup_api_url , obj,
     {

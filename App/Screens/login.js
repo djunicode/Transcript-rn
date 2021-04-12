@@ -12,7 +12,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Text_input from '../components/textInput.js';
-import {Switch, Card} from 'react-native-paper';
+import {Switch, Card , ActivityIndicator} from 'react-native-paper';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,6 +21,7 @@ import {connect} from 'react-redux';
 import {
   change_color_theme_to_dark,
   change_color_theme_to_light,
+  login_redux_call
 } from '../redux/actions.js';
 
 class Login extends React.Component {
@@ -45,9 +46,20 @@ class Login extends React.Component {
     }
   };
 
+  login = async () => {
+    await this.props.login_redux_call(this.state.email , this.state.password);
+  }
+
   onToggleSwitch = () => {
     this.setState({student: !this.state.student});
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user.user_info) {
+      nextProps.navigation.navigate('Home');
+    }
+    return null;
+  }
 
   render() {
     let toggle = this.props.color.gradient === "dark"
@@ -103,12 +115,10 @@ class Login extends React.Component {
                   teacher={!this.state.student}
                 />
               </View>
-
+              {this.props.log? (<ActivityIndicator/>) : (<View></View>)}
               <View style={{marginTop: '10%'}}>
                 <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.navigate('Home');
-                  }}
+                  onPress={this.login}
                   style={[
                     styles.buttonContainer,
                     {backgroundColor: this.props.color.button},
@@ -148,10 +158,12 @@ class Login extends React.Component {
 }
 
 const msp = state => ({
-    color : state.color
+    color : state.color,
+    log : state.log,
+    user : state.user
 })
 
-export default connect(msp,{change_color_theme_to_light , change_color_theme_to_dark})(Login)
+export default connect(msp,{login_redux_call})(Login)
 
 
 const styles = StyleSheet.create({

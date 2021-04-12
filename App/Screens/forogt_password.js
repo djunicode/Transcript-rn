@@ -21,15 +21,13 @@ import {connect} from 'react-redux';
 import {
   change_color_theme_to_dark,
   change_color_theme_to_light,
+  reset_password_redux_call
 } from '../redux/actions.js';
-
-
 
 
 class Forgot extends React.Component {
   state = {
     email: '',
-    password: '',
     student: true,
   };
 
@@ -42,18 +40,18 @@ class Forgot extends React.Component {
   callback = (input, label) => {
     if (label === 'EMAIL') {
       this.setState({email: input});
-    } else if (label === 'PASSWORD') {
-      this.setState({password: input});
-
     }
   };
+
+  reset = async () => {
+    const response = await this.props.reset_password_redux_call(this.state.email) 
+  }
 
   onToggleSwitch = () => {
     this.setState({student: !this.state.student});
   };
 
   render() {
-    let toggle = this.props.color.gradient === "dark"
     return (
       <KeyboardAvoidingView style={{flex:1}}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -104,7 +102,7 @@ class Forgot extends React.Component {
 
               <View style={{marginTop: '10%'}}>
                 <TouchableOpacity
-                  onPress={() => {}}
+                  onPress={this.reset}
                   style={[
                     styles.buttonContainer,
                     {backgroundColor: this.props.color.button},
@@ -127,7 +125,7 @@ const msp = state => ({
     color : state.color
 })
 
-export default connect(msp,{change_color_theme_to_light , change_color_theme_to_dark})(Forgot)
+export default connect(msp,{change_color_theme_to_light , change_color_theme_to_dark , reset_password_redux_call})(Forgot)
 
 
 const styles = StyleSheet.create({

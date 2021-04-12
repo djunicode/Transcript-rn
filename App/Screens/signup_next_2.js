@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { ImageBackground, StyleSheet, Text, View , Platform, TouchableOpacity, ScrollView, Keyboard, KeyboardAvoidingView, SafeAreaView} from "react-native";
-import { TextInput } from 'react-native-paper';
+import { ActivityIndicator, TextInput } from 'react-native-paper';
 import Text_input from '../components/textInput';
 import { Switch , Card} from 'react-native-paper';
 import {connect} from 'react-redux'
-import { change_color_theme_to_dark, change_color_theme_to_light , store_signup_temp , clear_user_data } from '../redux/actions.js';
+import {store_signup_temp , clear_user_data , signup_redux_call , clear_sign_deets} from '../redux/actions.js';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -35,12 +35,20 @@ class Signup extends React.Component {
             this.setState({contact: input})
         }
     };
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+      if (nextProps.sign.data) {
+        nextProps.clear_sign_deets({})
+        nextProps.navigation.navigate('Login');
+      }
+      return null;
+    }
   
     onToggleSwitch = () => {
       this.setState({student: !this.state.student});
     };
 
-    signup = () => {
+    signup = async () => {
 
       const ref = {
         'Computers' : 'CS',
@@ -70,12 +78,12 @@ class Signup extends React.Component {
       new_o["is_management"] = false
 
       console.log(new_o)
-
+      await this.props.signup_redux_call(new_o)
       this.props.clear_user_data({})
-
     }
   
     render() {
+      //console.log(this.props.sign)
         let data = [{
             value: 'Computers',
           }, {
@@ -143,6 +151,8 @@ class Signup extends React.Component {
                         <Year/>
                     </View>
                 </View>
+
+                {this.props.sign.stat?(<ActivityIndicator style={{marginTop:hp('4%')}} color={this.props.color.button}/>) : (<View></View>)}
   
                 <View style={{marginTop: '10%'}}>
                   <TouchableOpacity
@@ -166,9 +176,10 @@ class Signup extends React.Component {
   }
 
 const msp = state => ({
-    color : state.color
+    color : state.color,
+    sign : state.sign
 })
-export default connect(msp , {clear_user_data , store_signup_temp})(Signup)
+export default connect(msp , {clear_user_data , store_signup_temp , signup_redux_call , clear_sign_deets})(Signup)
 
 const styles = StyleSheet.create({
     imagebgr: {
