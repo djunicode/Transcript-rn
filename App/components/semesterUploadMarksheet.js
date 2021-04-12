@@ -18,19 +18,22 @@ class SemesterUploadMarksheet extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Semester {this.props.num}</Text>
+        <Text style={[styles.text, {color: this.props.color.text}]}>
+          Semester {this.props.num}
+        </Text>
         <View
           style={[
             styles.uploadContainer,
-            {borderColor: this.props.color.background_inner},
+            {
+              borderColor: this.props.color.text,
+            },
           ]}>
-          <Text style={styles.uploadedText}>{this.state.uploadedText}</Text>
+          <Text style={[styles.uploadedText, {color: this.props.color.text}]}>
+            {this.state.uploadedText}
+          </Text>
           <Button
             contentStyle={{height: hp('2.5%')}}
-            style={[
-              styles.button,
-              {backgroundColor: this.props.color.background_inner},
-            ]}
+            style={[styles.button, {backgroundColor: this.props.color.button}]}
             mode="contained"
             onPress={() => console.log('Pressed')}>
             Upload
