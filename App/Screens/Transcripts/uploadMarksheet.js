@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 
 import {
@@ -8,6 +8,7 @@ import {
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
 import SemesterUploadMarksheet from '../../components/semesterUploadMarksheet';
+import Header from '../../components/header';
 
 class uploadMarksheet extends Component {
   constructor(props) {
@@ -17,23 +18,12 @@ class uploadMarksheet extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View
-          style={{
-            backgroundColor: this.props.color.background_inner,
-            height: hp('13%'),
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginTop: hp('6%'),
-              fontSize: 32,
-              fontFamily: 'dosis-regular',
-              color: this.props.color.text,
-            }}>
-            Upload Marksheet
-          </Text>
-        </View>
+      <ScrollView
+        style={
+          ([styles.container],
+          {backgroundColor: this.props.color.background_init})
+        }>
+        <Header title="Upload Marksheet" />
         <View>
           <SemesterUploadMarksheet num={'I'} />
           <SemesterUploadMarksheet num={'II'} />
@@ -45,15 +35,12 @@ class uploadMarksheet extends Component {
           <SemesterUploadMarksheet num={'VIII'} />
         </View>
         <Button
-          style={[
-            styles.button,
-            {backgroundColor: this.props.color.background_inner},
-          ]}
+          style={[styles.button, {backgroundColor: this.props.color.button}]}
           mode="contained"
           onPress={() => console.log('Pressed')}>
           Save Changes
         </Button>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -67,7 +54,6 @@ export default connect(msp, {})(uploadMarksheet);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   button: {
     width: wp('50%'),

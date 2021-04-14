@@ -1,24 +1,32 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Dimensions,
+} from 'react-native';
 import {Button} from 'react-native-paper';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
+import Header from '../../components/header';
 import {connect} from 'react-redux';
-import Header from './../../components/header'
 
 const NewLor = (props) => {
   const navigation = useNavigation();
+  const width = Dimensions.get('screen').width;
   return (
-    <View style={{flex: 1 , backgroundColor:props.color.background_init}}>
-      <Header title="LOR Template"/>
+    <ScrollView style={{flex: 1, backgroundColor: props.color.background_init}}>
+      <Header title="LOR Template" />
       <View>
         <Text
           style={{
             textAlign: 'left',
-            fontSize: 17,
+            fontSize: widthPercentageToDP('5%'),
             marginHorizontal: widthPercentageToDP('10%'),
             marginVertical: heightPercentageToDP('5%'),
             fontFamily: 'Dosis-Regular',
@@ -40,7 +48,7 @@ const NewLor = (props) => {
           <View>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: widthPercentageToDP('4.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -48,7 +56,7 @@ const NewLor = (props) => {
             </Text>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: widthPercentageToDP('4.5%'),
                 fontFamily: 'Dosis-Bold',
                 color: props.color.text,
               }}>
@@ -57,11 +65,12 @@ const NewLor = (props) => {
           </View>
           <TextInput
             placeholder="Full Name"
+            placeholderTextColor={props.color.text}
             style={{
-              fontSize: 15,
+              fontSize: widthPercentageToDP('4.5%'),
               borderBottomWidth: 1,
               width: 200,
-              borderBottomColor: props.color.background_inner,
+              borderBottomColor: props.color.text,
               color: props.color.text,
             }}
           />
@@ -75,7 +84,7 @@ const NewLor = (props) => {
           }}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: widthPercentageToDP('4.5%'),
               fontFamily: 'Dosis-Bold',
               color: props.color.text,
             }}>
@@ -83,11 +92,12 @@ const NewLor = (props) => {
           </Text>
           <TextInput
             placeholder="Seperate each subject with a comma"
+            placeholderTextColor={props.color.text}
             style={{
-              fontSize: 13,
+              fontSize: widthPercentageToDP('4.5%'),
               borderBottomWidth: 1,
               width: 200,
-              borderBottomColor: props.color.background_inner,
+              borderBottomColor: props.color.text,
               color: props.color.text,
             }}
           />
@@ -102,7 +112,7 @@ const NewLor = (props) => {
           }}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: widthPercentageToDP('4.5%'),
               fontFamily: 'Dosis-Bold',
               color: props.color.text,
             }}>
@@ -110,11 +120,12 @@ const NewLor = (props) => {
           </Text>
           <TextInput
             placeholder="CGPA"
+            placeholderTextColor={props.color.text}
             style={{
-              fontSize: 13,
+              fontSize: widthPercentageToDP('4.5%'),
               borderBottomWidth: 1,
               width: 200,
-              borderBottomColor: props.color.background_inner,
+              borderBottomColor: props.color.text,
               color: props.color.text,
             }}
           />
@@ -123,7 +134,7 @@ const NewLor = (props) => {
       <View>
         <View
           style={{
-            flexDirection: 'row',
+            flexDirection: width < 400 ? 'column' : 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
             marginVertical: heightPercentageToDP('3%'),
@@ -132,8 +143,8 @@ const NewLor = (props) => {
             style={{
               borderWidth: 0.7,
               borderRadius: 6,
-              borderColor: props.color.background_inner,
-              backgroundColor: props.color.background_inner,
+              borderColor: props.color.button,
+              backgroundColor: props.color.button,
             }}>
             <Button
               style={{backgroundColor : props.color.button}}
@@ -148,8 +159,9 @@ const NewLor = (props) => {
             style={{
               borderWidth: 0.7,
               borderRadius: 6,
-              borderColor: props.color.background_inner,
-              backgroundColor: props.color.background_inner,
+              borderColor: props.color.button,
+              backgroundColor: props.color.button,
+              marginTop: width < 400 ? heightPercentageToDP('2%') : 0,
             }}>
             <Button
             style={{backgroundColor : props.color.button}}
@@ -164,8 +176,9 @@ const NewLor = (props) => {
             style={{
               borderWidth: 0.7,
               borderRadius: 6,
-              borderColor: props.color.background_inner,
-              backgroundColor: props.color.background_inner,
+              borderColor: props.color.button,
+              backgroundColor: props.color.button,
+              marginTop: width < 400 ? heightPercentageToDP('2%') : 0,
             }}>
             <Button
               style={{backgroundColor : props.color.button}}
@@ -190,15 +203,15 @@ const NewLor = (props) => {
           style={{
             borderWidth: 0.7,
             borderRadius: 6,
-            borderColor: props.color.background_inner,
-            backgroundColor: props.color.background_inner,
+            borderColor: props.color.button,
+            backgroundColor: props.color.button,
             marginHorizontal: widthPercentageToDP('24%'),
             marginVertical: heightPercentageToDP('4%'),
           }}>
           <Button style={{backgroundColor : props.color.button}} color={props.color.text}>Write your own LOR</Button>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

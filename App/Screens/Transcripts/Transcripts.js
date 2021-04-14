@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -8,12 +8,12 @@ import {connect} from 'react-redux';
 import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Header from './../../components/header'
+import Header from './../../components/header';
 
 const Transcripts = (props) => {
   return (
-    <View style={styles.container}>
-      <Header title="Dashboard"/>
+    <ScrollView style={{flex: 1, backgroundColor: props.color.background_init}}>
+      <Header title="Dashboard" />
       <View
         style={{
           marginLeft: 20,
@@ -22,18 +22,22 @@ const Transcripts = (props) => {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <Text style={{fontSize: 30}}>Transcripts</Text>
+        <Text style={{fontSize: wp('8%'), color: props.color.text}}>
+          Transcripts
+        </Text>
         <TouchableOpacity
           onPress={() => {
             props.navigation.navigate('Upload Marksheet');
           }}
           style={{
-            backgroundColor: props.color.background_inner,
+            backgroundColor: props.color.button,
             borderRadius: 5,
-            marginRight: wp('10%'),
+            marginRight: wp('12%'),
             padding: 3,
           }}>
-          <Text>Upload Marksheets</Text>
+          <Text style={{color: props.color.text, fontSize: wp('4%')}}>
+            Upload Marksheets
+          </Text>
         </TouchableOpacity>
       </View>
       <View
@@ -90,15 +94,19 @@ const Transcripts = (props) => {
       </View>
       <AntDesign
         name="pluscircle"
-        size={44}
-        color={props.color.background_inner}
+        size={wp('12%')}
+        color={props.color.button}
         style={{marginHorizontal: wp('44%')}}
       />
       <Text
-        style={{textAlign: 'center', fontSize: 20, color: props.color.text}}>
+        style={{
+          textAlign: 'center',
+          fontSize: wp('8%'),
+          color: props.color.text,
+        }}>
         Add New Transcript
       </Text>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -108,9 +116,4 @@ const msp = (state) => ({
 
 export default connect(msp, {})(Transcripts);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
+const styles = StyleSheet.create({});
