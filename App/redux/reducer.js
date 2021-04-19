@@ -1,14 +1,18 @@
 import {combineReducers} from 'redux'
-import {CLEAR_USER_DATA , CHANGE_LOG_STATUS , CHANGE_SIGN_STATUS , CHANGE_COLOR_THEME_TO_DARK , CHANGE_COLOR_THEME_TO_LIGHT , UPDATE_USER_DEETS} from './actions.js'
+import {CLEAR_USER_DATA , CHANGE_LOG_STATUS , CHANGE_SIGN_STATUS , CHANGE_COLOR_THEME_TO_DARK , CHANGE_COLOR_THEME_TO_LIGHT , UPDATE_USER_DEETS, STORE_SIGNUP_TEMP , UPDATE_SIGN_DEETS, CLEAR_SIGN_DEETS , RESET_PASSWORD} from './actions.js'
 
 const merge = (prev,next) => Object.assign({} , prev,next)
 
-const userReducer = (state = {} , action) => {
+const userReducer = (state = {reset:false} , action) => {
     switch(action.type){
+        case STORE_SIGNUP_TEMP:
+            return merge(state , action.payload)
         case UPDATE_USER_DEETS:
             return merge(state , {user_info:action.payload})
         case CLEAR_USER_DATA:
-            return ({})
+            return ({reset:false})
+        case RESET_PASSWORD:
+            return merge(state , {reset : action.payload})
         default:
             return state
     }
@@ -23,10 +27,14 @@ const logReducer = (state = false , action) => {
     }
 }
 
-const signReducer = (state = false , action) => {
+const signReducer = (state = {stat : false} , action) => {
     switch(action.type){
         case CHANGE_SIGN_STATUS:
-            return action.payload
+            return merge(state , {stat : action.payload})
+        case UPDATE_SIGN_DEETS:
+            return merge(state , {data : action.payload})
+        case CLEAR_SIGN_DEETS:
+            return ({stat : false})
         default:
             return state
     }
@@ -61,7 +69,7 @@ const reducer = combineReducers({
     user : userReducer,
     log : logReducer,
     sign : signReducer,
-    color : colorReducer
+    color : colorReducer,
 })
 
 export default reducer

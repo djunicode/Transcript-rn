@@ -147,6 +147,7 @@ const NewLor = (props) => {
               backgroundColor: props.color.button,
             }}>
             <Button
+              style={{backgroundColor : props.color.button}}
               color={props.color.text}
               onPress={() => {
                 navigation.navigate('Template1');
@@ -163,6 +164,7 @@ const NewLor = (props) => {
               marginTop: width < 400 ? heightPercentageToDP('2%') : 0,
             }}>
             <Button
+            style={{backgroundColor : props.color.button}}
               color={props.color.text}
               onPress={() => {
                 navigation.navigate('Template2');
@@ -179,6 +181,7 @@ const NewLor = (props) => {
               marginTop: width < 400 ? heightPercentageToDP('2%') : 0,
             }}>
             <Button
+              style={{backgroundColor : props.color.button}}
               color={props.color.text}
               onPress={() => {
                 navigation.navigate('Template3');
@@ -205,7 +208,7 @@ const NewLor = (props) => {
             marginHorizontal: widthPercentageToDP('24%'),
             marginVertical: heightPercentageToDP('4%'),
           }}>
-          <Button color={props.color.text}>Write your own LOR</Button>
+          <Button style={{backgroundColor : props.color.button}} color={props.color.text}>Write your own LOR</Button>
         </View>
       </View>
     </ScrollView>

@@ -12,7 +12,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Text_input from '../components/textInput.js';
-import {Switch, Card , ActivityIndicator} from 'react-native-paper';
+import {Switch, Card} from 'react-native-paper';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,13 +21,13 @@ import {connect} from 'react-redux';
 import {
   change_color_theme_to_dark,
   change_color_theme_to_light,
-  login_redux_call
+  reset_password_redux_call
 } from '../redux/actions.js';
 
-class Login extends React.Component {
+
+class Forgot extends React.Component {
   state = {
     email: '',
-    password: '',
     student: true,
   };
 
@@ -40,29 +40,18 @@ class Login extends React.Component {
   callback = (input, label) => {
     if (label === 'EMAIL') {
       this.setState({email: input});
-    } else if (label === 'PASSWORD') {
-      this.setState({password: input});
-
     }
   };
 
-  login = async () => {
-    await this.props.login_redux_call(this.state.email , this.state.password);
+  reset = async () => {
+    const response = await this.props.reset_password_redux_call(this.state.email) 
   }
 
   onToggleSwitch = () => {
     this.setState({student: !this.state.student});
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.user.user_info) {
-      nextProps.navigation.navigate('Home');
-    }
-    return null;
-  }
-
   render() {
-    let toggle = this.props.color.gradient === "dark"
     return (
       <KeyboardAvoidingView style={{flex:1}}
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -89,7 +78,7 @@ class Login extends React.Component {
                   </Text>
                   <Text
                     style={[styles.textBig, {color: this.props.color.text}]}>
-                    Welcome Back!
+                    Forgot Password?
                   </Text>
                 </View>
               ) : (
@@ -109,43 +98,18 @@ class Login extends React.Component {
                   callback={this.callback}
                   teacher={!this.state.student}
                 />
-                <Text_input
-                  label="PASSWORD"
-                  callback={this.callback}
-                  teacher={!this.state.student}
-                />
               </View>
-              {this.props.log? (<ActivityIndicator/>) : (<View></View>)}
+
               <View style={{marginTop: '10%'}}>
                 <TouchableOpacity
-                  onPress={this.login}
+                  onPress={this.reset}
                   style={[
                     styles.buttonContainer,
                     {backgroundColor: this.props.color.button},
                   ]}>
                   <Text
                     style={[styles.buttonText, {color: this.props.color.text}]}>
-                    Login
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {this.props.navigation.navigate('SignUp')}}
-                  style={[
-                    styles.buttonContainer,
-                    {backgroundColor: this.props.color.button},
-                  ]}>
-                  <Text
-                    style={[styles.buttonText, {color: this.props.color.text}]}>
-                    Create Account
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => {this.props.navigation.navigate('Forgot')}}>
-                  <Text
-                    style={{color: this.props.color.text , alignSelf : 'center' , textDecorationLine: 'underline', marginTop : hp("2%") , fontSize:hp("2%")}}>
-                    Forgot Password?
+                    Confirm Email
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -158,12 +122,10 @@ class Login extends React.Component {
 }
 
 const msp = state => ({
-    color : state.color,
-    log : state.log,
-    user : state.user
+    color : state.color
 })
 
-export default connect(msp,{login_redux_call})(Login)
+export default connect(msp,{change_color_theme_to_light , change_color_theme_to_dark , reset_password_redux_call})(Forgot)
 
 
 const styles = StyleSheet.create({
