@@ -34,12 +34,6 @@ class uploadMarksheet extends Component {
           <SemesterUploadMarksheet num={'VII'} />
           <SemesterUploadMarksheet num={'VIII'} />
         </View>
-        <Button
-          style={[styles.button, {backgroundColor: this.props.color.button}]}
-          mode="contained"
-          onPress={() => console.log('Pressed')}>
-          Save Changes
-        </Button>
       </ScrollView>
     );
   }
