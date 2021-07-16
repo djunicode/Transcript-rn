@@ -15,12 +15,11 @@ import NewLor from './App/Screens/LOR/NewLor';
 import Template1 from './App/Screens/LOR/Template1';
 import Template2 from './App/Screens/LOR/Template2';
 import Template3 from './App/Screens/LOR/Template3';
-import Forgot from './App/Screens/forogt_password'
-import Signup_next_1 from './App/Screens/signup_next'
-import Signup_next_2 from './App/Screens/signup_next_2'
+import Forgot from './App/Screens/forogt_password';
+import Signup_next_1 from './App/Screens/signup_next';
+import Signup_next_2 from './App/Screens/signup_next_2';
 
-import Test from './App/test_api'
-
+import Test from './App/test_api';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -106,7 +105,7 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               screenOptions={{headerShown: false}}
-              initialRouteName="Login">
+              initialRouteName="Home">
               <Stack.Screen name="SignUp" component={Signup} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Settings" component={Settings} />
