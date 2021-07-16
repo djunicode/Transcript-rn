@@ -34,8 +34,7 @@ class SemesterUploadMarksheet extends Component {
           <Button
             contentStyle={{height: hp('2.5%')}}
             style={[styles.button, {backgroundColor: this.props.color.button}]}
-            mode="contained"
-            onPress={() => console.log('Pressed')}>
+            mode="contained">
             Upload
           </Button>
         </View>
