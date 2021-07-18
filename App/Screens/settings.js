@@ -29,7 +29,6 @@ class Settings extends React.Component{
                 <Header title="Settings"/>
                 <Image source={image} style={styles.image_style}/>
                 <Text style={[styles.user_text, {color : this.props.color.text}]}>PropUserName</Text>
-                <Button mode="contained" style={[styles.button , {backgroundColor : this.props.color.button}]} labelStyle={{color : this.props.color.text}}> Update Details </Button>
                 <Button mode="contained" style={[styles.button , {backgroundColor : this.props.color.button}]} labelStyle={{color : this.props.color.text}} onPress={this.logout}> Logout </Button>
                 <View style={{flexDirection : 'row' , marginTop : hp("3%")}}>
                     <View style={{flex:1}}>
