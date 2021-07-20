@@ -84,6 +84,7 @@ export const signup_redux_call = (obj) => async dispatch => {
         dispatch(update_sign_deets(response.data))
     }catch(e){
         dispatch(change_sign_status(false))
+        console.log(e)
         alert(e)
     }
 }
@@ -98,6 +99,7 @@ export const reset_password_redux_call = (email) => async dispatch => {
     }catch(e){
         dispatch(reset_password(false))
         alert(e)
+        console.log(e)
         return "err"
     }
 }
