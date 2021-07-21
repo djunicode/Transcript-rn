@@ -10,8 +10,19 @@ import {
 import {connect} from 'react-redux';
 import {data} from '../../Utils/temp';
 
+import { BackHandler } from 'react-native';
+
 const Subjects = (props) => {
   const navigation = useNavigation();
+  // if(this.props.transcript.edit_marks == {}){
+  //   return (
+  //     <View
+  //     style={{
+  //       flex: 1,
+  //       backgroundColor: props.color.background_init,
+  //     }}>Loading...</View>
+  //   )
+  // }else{
   return (
     <View
       style={{
@@ -100,6 +111,7 @@ const Subjects = (props) => {
 
 const msp = (state) => ({
   color: state.color,
+  transcript : state.transcript
 });
 
 export default connect(msp, {})(Subjects);

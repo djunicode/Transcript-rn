@@ -1,4 +1,4 @@
-import {login_api_call , reset_password_api_call, signup_api_call} from './../API/api'
+import {login_api_call , reset_password_api_call, scan_marksheet, signup_api_call} from './../API/api'
 
 //action types
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA'
@@ -11,8 +11,20 @@ export const STORE_SIGNUP_TEMP = 'STORE_SIGNUP_TEMP'
 export const UPDATE_SIGN_DEETS = 'UPDATE_SIGN_DEETS'
 export const CLEAR_SIGN_DEETS = 'CLEAR_SIGN_DEETS'
 export const RESET_PASSWORD = 'RESET_PASSWORD'
+export const EDITABLEOCRCREATE = 'EDITABLEOCRCREATE'
+export const UPLOAD_CLICKED = 'UPLOAD_CLICKED'
 
 //action creators
+export const upload_clicked = update => ({
+    type: UPLOAD_CLICKED,
+    payload : update
+})
+
+export const editable_ocr_create = update => ({
+    type: EDITABLEOCRCREATE,
+    paload : update
+})
+
 export const reset_password = update => ({
     type : RESET_PASSWORD,
     payload : update
@@ -101,5 +113,16 @@ export const reset_password_redux_call = (email) => async dispatch => {
         alert(e)
         console.log(e)
         return "err"
+    }
+}
+
+export const scan_marksheet_async_action = (token, file, sem) => async dispatch => {
+    try{
+        dispatch(upload_clicked(true))
+        const response = await scan_marksheet(token, file, sem)
+        dispatch(editable_ocr_create(response.data))
+    }catch(e){
+        dispatch(upload_clicked(false))
+        alert(e)
     }
 }

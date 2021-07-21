@@ -4,7 +4,7 @@ const base = "https://transcripts-app.herokuapp.com/api/"
 const signup_api_url = base + "auth/users/"
 const login_api_url = base + "auth/login/"
 const reset_password_api_url = base + "auth/users/reset_password/"
-const scan_marksheet = base + "student/scan_marksheet/" //ocr after upload ["file" : file]
+const scan_marksheet_url = base + "student/scan_marksheet/" //ocr after upload ["file" : file]
 const upload_final_marksheet = base + "student/marks/" //submit final after editing
 const add_transcript_url = base + "student/applications/" //GET + POST 
 const user_profile = base + "​student​/profile​/" //GET for student name in settings
@@ -64,6 +64,25 @@ axios.post(`${API_BASE}/api/student/applications/`,{}, generateHeaders(localStor
 
 */
 
+export const scan_marksheet = async(token, file, sem ) => {
+    var data = new FormData();
+    data.append('file', file);
+    data.append('semester', sem.toString());
+
+    var config = {
+    method: 'post',
+    url: scan_marksheet_url, //'https://transcripts-app.herokuapp.com/api/student/scan_marksheet/',
+    headers: { 
+        'Authorization': 'Token '+token, 
+    },
+    data : data
+    };
+
+    let response = await axios(config)
+    console.log(response.data)
+    return response
+}
+
 export const reset_password_api_call = async (email) => {
     const response = await axios.post(reset_password_api_url , {"email" : email})
     console.log(response.data)
@@ -80,6 +99,7 @@ export const signup_api_call = async (obj) => {
     console.log(response.data)
     return response
 }
+
 
 export const login_api_call = async (email , password) => {
     const response = await axios.post(login_api_url , {        

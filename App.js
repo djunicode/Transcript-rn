@@ -19,6 +19,8 @@ import Forgot from './App/Screens/forogt_password';
 import Signup_next_1 from './App/Screens/signup_next';
 import Signup_next_2 from './App/Screens/signup_next_2';
 
+import Subjects from './App/Screens/Transcripts/Subjects'
+
 import Test from './App/test_api';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -117,6 +119,7 @@ export default function App() {
               <Stack.Screen name="Forgot" component={Forgot} />
               <Stack.Screen name="SN1" component={Signup_next_1} />
               <Stack.Screen name="SN2" component={Signup_next_2} />
+              <Stack.Screen name="Subjects" component={Subjects} />
               <Stack.Screen name="Test" component={Test} />
             </Stack.Navigator>
           </NavigationContainer>
