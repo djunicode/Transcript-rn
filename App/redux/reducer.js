@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {CLEAR_USER_DATA , CHANGE_LOG_STATUS , CHANGE_SIGN_STATUS , CHANGE_COLOR_THEME_TO_DARK , CHANGE_COLOR_THEME_TO_LIGHT , UPDATE_USER_DEETS, STORE_SIGNUP_TEMP , UPDATE_SIGN_DEETS, CLEAR_SIGN_DEETS , RESET_PASSWORD} from './actions.js'
+import {CLEAR_USER_DATA , UPLOAD_CLICKED,  EDITABLEOCRCREATE, CHANGE_LOG_STATUS , CHANGE_SIGN_STATUS , CHANGE_COLOR_THEME_TO_DARK , CHANGE_COLOR_THEME_TO_LIGHT , UPDATE_USER_DEETS, STORE_SIGNUP_TEMP , UPDATE_SIGN_DEETS, CLEAR_SIGN_DEETS , RESET_PASSWORD} from './actions.js'
 
 const merge = (prev,next) => Object.assign({} , prev,next)
 
@@ -65,11 +65,23 @@ const colorReducer = (state = {button : "#9AB3FF", text_input_underline : "#9AB3
     }
 }
 
+const transcriptReducer = (state={edit_marks:{}, clicked:false}, action) => {
+    switch(action.type){
+        case EDITABLEOCRCREATE:
+            return({...state, edit_marks:action.payload})
+        case UPLOAD_CLICKED:
+            return({...state, clicked:action.payload})
+        default:
+            return state
+    }
+}
+
 const reducer = combineReducers({
     user : userReducer,
     log : logReducer,
     sign : signReducer,
     color : colorReducer,
+    transcript: transcriptReducer
 })
 
 export default reducer

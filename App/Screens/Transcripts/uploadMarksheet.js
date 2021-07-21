@@ -25,14 +25,14 @@ class uploadMarksheet extends Component {
         }>
         <Header title="Upload Marksheet" />
         <View>
-          <SemesterUploadMarksheet num={'I'} />
-          <SemesterUploadMarksheet num={'II'} />
-          <SemesterUploadMarksheet num={'III'} />
-          <SemesterUploadMarksheet num={'IV'} />
-          <SemesterUploadMarksheet num={'V'} />
-          <SemesterUploadMarksheet num={'VI'} />
-          <SemesterUploadMarksheet num={'VII'} />
-          <SemesterUploadMarksheet num={'VIII'} />
+          <SemesterUploadMarksheet num={'I'} sem={1} nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'II'} sem={2} nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'III'} sem={3}nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'IV'} sem={4} nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'V'} sem={5} nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'VI'} sem={6} nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'VII'} sem={7} nav= {this.props.navigation}/>
+          <SemesterUploadMarksheet num={'VIII'} sem={8} nav= {this.props.navigation}/>
         </View>
       </ScrollView>
     );
