@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,22 +8,54 @@ import {
   TextInput,
   ScrollView,
   Image,
+  LogBox,
 } from 'react-native';
 import {Card, Title} from 'react-native-paper';
-import {sub} from 'react-native-reanimated';
 import {connect} from 'react-redux';
 import {data} from '../../Utils/detail';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-
-// const Content = ({route}) => {
-//   const {subjectName} = route.params;
-//   return <Text>{subjectName}</Text>;
-// };
-
+import {useNavigation} from '@react-navigation/native';
+LogBox.ignoreLogs(['VirtualizedList']);
+let tempData = [];
 const SubjectDetails = (props) => {
+  const navigation = useNavigation();
+  const {
+    subjectName,
+    cg,
+    course_code,
+    credits_earned,
+    grade,
+    pointer,
+    cgpa,
+    sem,
+    data,
+  } = props.route.params;
+  const [updatedSubjectName, setUpdatedSubjectName] = useState(subjectName);
+  const [updatedCg, setUpdatedCg] = useState(cg);
+  const [updatedCourseCode, setUpdatedCourseCode] = useState(course_code);
+  const [updatedCredits, setUpdatedCredits] = useState(credits_earned);
+  const [updatedGrade, setUpdatedGrade] = useState(grade);
+  const [updatedPointer, setUpdatedPointer] = useState(pointer);
+  const newData = {
+    cg: updatedCg,
+    course_code: updatedCourseCode,
+    course_name: updatedSubjectName,
+    credits_earned: updatedCredits,
+    grade: updatedGrade,
+    pointer: updatedPointer,
+  };
+
+  const updateData = () => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].course_name == subjectName) {
+        data[i] = newData;
+      }
+    }
+  };
+
   return (
     <ScrollView
       style={{
@@ -61,7 +93,7 @@ const SubjectDetails = (props) => {
                 fontSize: 20,
                 fontFamily: 'Dosis-Regular',
               }}>
-              Semester: 3
+              Semester: {sem}
             </Text>
             <Text
               style={{
@@ -69,176 +101,184 @@ const SubjectDetails = (props) => {
                 fontSize: 20,
                 fontFamily: 'Dosis-Regular',
               }}>
-              CGPA: 9.5
+              CGPA: {cgpa}
             </Text>
           </View>
-          <FlatList
-            data={data}
-            renderItem={(itemData) => {
-              return (
-                <View>
-                  <View
-                    style={{
-                      marginHorizontal: widthPercentageToDP('4%'),
-                      borderBottomWidth: 1,
 
-                      borderBottomColor: props.color.text,
-                      marginTop: heightPercentageToDP('5%'),
-                    }}>
-                    <Text
-                      style={{
-                        marginHorizontal: widthPercentageToDP('1%'),
-                        color: props.color.text,
-                        fontSize: 18,
-                        fontFamily: 'Dosis-Regular',
-                      }}>
-                      Course Code:
-                    </Text>
-                    <TextInput
-                      style={{
-                        color: props.color.text,
-                        fontSize: 20,
-                        fontFamily: 'Dosis-Bold',
-                      }}
-                      value={itemData.item.courseCode}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginHorizontal: widthPercentageToDP('4%'),
-                      borderBottomWidth: 1,
-                      borderBottomColor: props.color.text,
-                      marginTop: heightPercentageToDP('5%'),
-                    }}>
-                    <Text
-                      style={{
-                        marginHorizontal: widthPercentageToDP('1%'),
-                        color: props.color.text,
-                        fontSize: 18,
-                        fontFamily: 'Dosis-Regular',
-                      }}>
-                      Course Name:
-                    </Text>
-                    <TextInput
-                      style={{
-                        color: props.color.text,
-                        fontSize: 20,
-                        fontFamily: 'Dosis-Bold',
-                      }}
-                      value={itemData.item.name}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginHorizontal: widthPercentageToDP('4%'),
-                      borderBottomWidth: 1,
-                      borderBottomColor: props.color.text,
-                      marginTop: heightPercentageToDP('5%'),
-                    }}>
-                    <Text
-                      style={{
-                        marginHorizontal: widthPercentageToDP('1%'),
-                        color: props.color.text,
-                        fontSize: 18,
-                        fontFamily: 'Dosis-Regular',
-                      }}>
-                      Credits Earned:
-                    </Text>
-                    <TextInput
-                      style={{
-                        color: props.color.text,
-                        fontSize: 20,
-                        fontFamily: 'Dosis-Bold',
-                      }}
-                      value={itemData.item.creditsEarned}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginHorizontal: widthPercentageToDP('4%'),
-                      borderBottomWidth: 1,
-                      borderBottomColor: props.color.text,
-                      marginTop: heightPercentageToDP('5%'),
-                    }}>
-                    <Text
-                      style={{
-                        marginHorizontal: widthPercentageToDP('1%'),
-                        color: props.color.text,
-                        fontSize: 18,
-                        fontFamily: 'Dosis-Regular',
-                      }}>
-                      Grade:
-                    </Text>
-                    <TextInput
-                      style={{
-                        color: props.color.text,
-                        fontSize: 20,
-                        fontFamily: 'Dosis-Bold',
-                      }}
-                      value={itemData.item.grade}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginHorizontal: widthPercentageToDP('4%'),
-                      borderBottomWidth: 1,
-                      borderBottomColor: props.color.text,
-                      marginTop: heightPercentageToDP('5%'),
-                    }}>
-                    <Text
-                      style={{
-                        marginHorizontal: widthPercentageToDP('1%'),
-                        color: props.color.text,
-                        fontSize: 18,
-                        fontFamily: 'Dosis-Regular',
-                      }}>
-                      Pointer:
-                    </Text>
-                    <TextInput
-                      style={{
-                        color: props.color.text,
-                        fontSize: 20,
-                        fontFamily: 'Dosis-Bold',
-                      }}
-                      value={itemData.item.pointer}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginHorizontal: widthPercentageToDP('4%'),
-                      borderBottomWidth: 1,
-                      borderBottomColor: props.color.text,
-                      marginTop: heightPercentageToDP('5%'),
-                    }}>
-                    <Text
-                      style={{
-                        marginHorizontal: widthPercentageToDP('1%'),
-                        color: props.color.text,
-                        fontSize: 18,
-                        fontFamily: 'Dosis-Regular',
-                      }}>
-                      C*G:
-                    </Text>
-                    <TextInput
-                      style={{
-                        color: props.color.text,
-                        fontSize: 20,
-                        fontFamily: 'Dosis-Bold',
-                      }}
-                      value={itemData.item.pointer}
-                    />
-                  </View>
-                </View>
-              );
-            }}
-          />
+          <View>
+            <View
+              style={{
+                marginHorizontal: widthPercentageToDP('4%'),
+                borderBottomWidth: 1,
+
+                borderBottomColor: props.color.text,
+                marginTop: heightPercentageToDP('5%'),
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: widthPercentageToDP('1%'),
+                  color: props.color.text,
+                  fontSize: 18,
+                  fontFamily: 'Dosis-Regular',
+                }}>
+                Course Code:
+              </Text>
+              <TextInput
+                style={{
+                  color: props.color.text,
+                  fontSize: 20,
+                  fontFamily: 'Dosis-Bold',
+                }}
+                value={updatedCourseCode}
+                onChangeText={(data) => setUpdatedCourseCode(data)}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: widthPercentageToDP('4%'),
+                borderBottomWidth: 1,
+                borderBottomColor: props.color.text,
+                marginTop: heightPercentageToDP('5%'),
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: widthPercentageToDP('1%'),
+                  color: props.color.text,
+                  fontSize: 18,
+                  fontFamily: 'Dosis-Regular',
+                }}>
+                Course Name:
+              </Text>
+              <TextInput
+                style={{
+                  color: props.color.text,
+                  fontSize: 20,
+                  fontFamily: 'Dosis-Bold',
+                }}
+                value={updatedSubjectName}
+                onChangeText={(data) => setUpdatedSubjectName(data)}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: widthPercentageToDP('4%'),
+                borderBottomWidth: 1,
+                borderBottomColor: props.color.text,
+                marginTop: heightPercentageToDP('5%'),
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: widthPercentageToDP('1%'),
+                  color: props.color.text,
+                  fontSize: 18,
+                  fontFamily: 'Dosis-Regular',
+                }}>
+                Credits Earned:
+              </Text>
+              <TextInput
+                style={{
+                  color: props.color.text,
+                  fontSize: 20,
+                  fontFamily: 'Dosis-Bold',
+                }}
+                value={updatedCredits}
+                onChangeText={(data) => setUpdatedCredits(data)}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: widthPercentageToDP('4%'),
+                borderBottomWidth: 1,
+                borderBottomColor: props.color.text,
+                marginTop: heightPercentageToDP('5%'),
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: widthPercentageToDP('1%'),
+                  color: props.color.text,
+                  fontSize: 18,
+                  fontFamily: 'Dosis-Regular',
+                }}>
+                Grade:
+              </Text>
+              <TextInput
+                style={{
+                  color: props.color.text,
+                  fontSize: 20,
+                  fontFamily: 'Dosis-Bold',
+                }}
+                value={updatedGrade}
+                onChangeText={(data) => setUpdatedGrade(data)}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: widthPercentageToDP('4%'),
+                borderBottomWidth: 1,
+                borderBottomColor: props.color.text,
+                marginTop: heightPercentageToDP('5%'),
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: widthPercentageToDP('1%'),
+                  color: props.color.text,
+                  fontSize: 18,
+                  fontFamily: 'Dosis-Regular',
+                }}>
+                Pointer:
+              </Text>
+              <TextInput
+                style={{
+                  color: props.color.text,
+                  fontSize: 20,
+                  fontFamily: 'Dosis-Bold',
+                }}
+                value={updatedPointer}
+                onChangeText={(data) => setUpdatedPointer(data)}
+              />
+            </View>
+            <View
+              style={{
+                marginHorizontal: widthPercentageToDP('4%'),
+                borderBottomWidth: 1,
+                borderBottomColor: props.color.text,
+                marginTop: heightPercentageToDP('5%'),
+              }}>
+              <Text
+                style={{
+                  marginHorizontal: widthPercentageToDP('1%'),
+                  color: props.color.text,
+                  fontSize: 18,
+                  fontFamily: 'Dosis-Regular',
+                }}>
+                C*G:
+              </Text>
+              <TextInput
+                style={{
+                  color: props.color.text,
+                  fontSize: 20,
+                  fontFamily: 'Dosis-Bold',
+                }}
+                value={updatedCg}
+                onChangeText={(data) => setUpdatedCg(data)}
+              />
+            </View>
+          </View>
+
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                updateData();
+
+                navigation.navigate('Subjects', {
+                  updatedData: data,
+                });
+              }}>
               <Image source={require('../../Assets/Group83.png')} />
               <Text
                 style={{
@@ -252,7 +292,12 @@ const SubjectDetails = (props) => {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Subjects', {
+                  updatedData: data,
+                });
+              }}>
               <Image source={require('../../Assets/Group82.png')} />
               <Text
                 style={{

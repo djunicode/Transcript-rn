@@ -19,7 +19,7 @@ import Forgot from './App/Screens/forogt_password';
 import Signup_next_1 from './App/Screens/signup_next';
 import Signup_next_2 from './App/Screens/signup_next_2';
 
-import Subjects from './App/Screens/Transcripts/Subjects'
+import Subjects from './App/Screens/Transcripts/Subjects';
 
 import Test from './App/test_api';
 

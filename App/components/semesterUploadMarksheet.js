@@ -7,8 +7,12 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import DocumentPicker from 'react-native-document-picker';
-import { scan_marksheet } from '../API/api';
-import { editable_ocr_create, scan_marksheet_async_action, upload_clicked } from './../redux/actions'
+import {scan_marksheet} from '../API/api';
+import {
+  editable_ocr_create,
+  scan_marksheet_async_action,
+  upload_clicked,
+} from './../redux/actions';
 
 class SemesterUploadMarksheet extends Component {
   constructor(props) {
@@ -20,8 +24,13 @@ class SemesterUploadMarksheet extends Component {
   }
 
   scan_api_call = async (file) => {
-    await this.props.scan_marksheet_async_action(this.props.user.user_info["token"], file, this.props.sem)
-  }
+    let response = await this.props.scan_marksheet_async_action(
+      this.props.user.user_info['token'],
+      file,
+      this.props.sem,
+    );
+    return response;
+  };
 
   selectFile = async () => {
     try {
@@ -29,8 +38,12 @@ class SemesterUploadMarksheet extends Component {
         type: [DocumentPicker.types.pdf],
       });
       this.setState({file: res, uploadedText: res.name});
-      await this.scan_api_call(res)
-      this.props.nav.navigate('Subjects');
+      let response = await this.scan_api_call(res);
+      console.log(response);
+      this.props.nav.navigate('Subjects', {
+        response: response,
+        sem: this.props.sem,
+      });
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         alert('Canceled');
@@ -44,61 +57,65 @@ class SemesterUploadMarksheet extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.transcript.clicked) {
-      console.log("hi")
+      console.log('hi');
     }
     return null;
   }
 
   render() {
-    if(this.props.transcript.clicked)
-      this.props.upload_clicked(false)
-    //console.log(this.props.transcript)
-    //console.log(this.props.user.user_info)
-    if(this.props.transcript.clicked){
-      return(
+    // if (this.props.transcript.clicked) this.props.upload_clicked(false);
+    if (this.props.transcript.clicked) {
+      return (
         <View style={styles.container}>
-          <Text style={{color:"#fff"}}>Loading...</Text>
+          <Text style={{color: '#fff'}}>Loading...</Text>
         </View>
-      )
-    }
-    else{
-    return (
-      <View style={styles.container}>
-        <Text style={[styles.text, {color: this.props.color.text}]}>
-          Semester {this.props.num}
-        </Text>
-        <View
-          style={[
-            styles.uploadContainer,
-            {
-              borderColor: this.props.color.text,
-            },
-          ]}>
-          <Text
-            numberOfLines={2}
-            style={[styles.uploadedText, {color: this.props.color.text}]}>
-            {this.state.uploadedText}
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={[styles.text, {color: this.props.color.text}]}>
+            Semester {this.props.num}
           </Text>
-          <Button
-            contentStyle={{height: hp('5%')}}
-            style={[styles.button, {backgroundColor: this.props.color.button}]}
-            mode="contained"
-            onPress={() => this.selectFile()}>
-            Upload
-          </Button>
+          <View
+            style={[
+              styles.uploadContainer,
+              {
+                borderColor: this.props.color.text,
+              },
+            ]}>
+            <Text
+              numberOfLines={2}
+              style={[styles.uploadedText, {color: this.props.color.text}]}>
+              {this.state.uploadedText}
+            </Text>
+            <Button
+              contentStyle={{height: hp('5%')}}
+              style={[
+                styles.button,
+                {backgroundColor: this.props.color.button},
+              ]}
+              mode="contained"
+              onPress={() => this.selectFile()}>
+              Upload
+            </Button>
+          </View>
         </View>
-      </View>
-    )};
+      );
+    }
   }
 }
 
 const msp = (state) => ({
   color: state.color,
-  user : state.user,
-  transcript : state.transcript
+  user: state.user,
+  transcript: state.transcript,
 });
 
-export default connect(msp, {editable_ocr_create, scan_marksheet_async_action, upload_clicked})(SemesterUploadMarksheet);
+export default connect(msp, {
+  editable_ocr_create,
+  scan_marksheet_async_action,
+  upload_clicked,
+})(SemesterUploadMarksheet);
 
 const styles = StyleSheet.create({
   container: {
