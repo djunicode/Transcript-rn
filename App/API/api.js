@@ -1,13 +1,13 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const base = "https://transcripts-app.herokuapp.com/api/"
-const signup_api_url = base + "auth/users/"
-const login_api_url = base + "auth/login/"
-const reset_password_api_url = base + "auth/users/reset_password/"
-const scan_marksheet_url = base + "student/scan_marksheet/" //ocr after upload ["file" : file]
-const upload_final_marksheet = base + "student/marks/" //submit final after editing
-const add_transcript_url = base + "student/applications/" //GET + POST 
-const user_profile = base + "​student​/profile​/" //GET for student name in settings
+const base = 'https://transcripts-app.herokuapp.com/api/';
+const signup_api_url = base + 'auth/users/';
+const login_api_url = base + 'auth/login/';
+const reset_password_api_url = base + 'auth/users/reset_password/';
+const scan_marksheet_url = base + 'student/scan_marksheet/'; //ocr after upload ["file" : file]
+const upload_final_marksheet = base + 'student/marks/'; //submit final after editing
+const add_transcript_url = base + 'student/applications/'; //GET + POST
+// const user_profile = base + '​student​/profile​/'; //GET for student name in settings
 //const user_email = base + "auth/me/" // Get for email if needed
 /*
 
@@ -64,53 +64,77 @@ axios.post(`${API_BASE}/api/student/applications/`,{}, generateHeaders(localStor
 
 */
 
-export const scan_marksheet = async(token, file, sem ) => {
-    var data = new FormData();
-    data.append('file', file);
-    data.append('semester', sem.toString());
+export const scan_marksheet = async (token, file, sem) => {
+  var data = new FormData();
+  data.append('file', file);
+  data.append('semester', sem.toString());
 
-    var config = {
+  var config = {
     method: 'post',
     url: scan_marksheet_url, //'https://transcripts-app.herokuapp.com/api/student/scan_marksheet/',
-    headers: { 
-        'Authorization': 'Token '+token, 
+    headers: {
+      Authorization: 'Token ' + token,
     },
-    data : data
-    };
+    data: data,
+  };
 
-    let response = await axios(config)
-    console.log(response.data)
-    return response
-}
+  let response = await axios(config);
+  return response;
+};
 
 export const reset_password_api_call = async (email) => {
-    const response = await axios.post(reset_password_api_url , {"email" : email})
-    console.log(response.data)
-    return response
-}
+  const response = await axios.post(reset_password_api_url, {email: email});
+  console.log(response.data);
+  return response;
+};
 
 export const signup_api_call = async (obj) => {
-    const response = await axios.post(signup_api_url , obj,
+  const response = await axios.post(signup_api_url, obj, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  console.log(response.data);
+  return response;
+};
+
+export const login_api_call = async (email, password) => {
+  const response = await axios.post(
+    login_api_url,
     {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-    })
-    console.log(response.data)
-    return response
-}
-
-
-export const login_api_call = async (email , password) => {
-    const response = await axios.post(login_api_url , {        
-        "email":email,
-        "password":password
+      email: email,
+      password: password,
     },
     {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-    })
-    console.log(response.data)
-    return response
-}
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  console.log(response.data);
+  return response;
+};
+
+export const get_transcripts_api_call = async (token) => {
+  let response = await axios.get(add_transcript_url, {
+    headers: {
+      Authorization: 'Token ' + token,
+    },
+  });
+  console.log(response);
+  return response;
+};
+
+export const upload_final_marksheet_call = async (token, body, sem) => {
+  let response = await axios.post(
+    upload_final_marksheet,
+    {marksheet: body, sem: sem},
+    {
+      headers: {
+        Authorization: 'Token ' + token,
+      },
+    },
+  );
+  console.log(response);
+  return response;
+};
