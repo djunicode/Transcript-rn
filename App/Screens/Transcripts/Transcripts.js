@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  ScrollView,
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -13,7 +13,6 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
-import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from './../../components/header';
 import {
@@ -135,17 +134,27 @@ class Transcripts extends React.Component {
     data: [{}, {}, {}, {}, {}],
   };
 
+  createAlert = (title, msg) =>
+    Alert.alert(title, msg, [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+
   add_transcript = () => {
-    console.log('add');
     add_transcripts_api_call(this.props.user.user_info['token'])
       .then((response) => {
         if (response === 'error') {
           response = response[-1];
         }
-        if (parseInt(response) < 300) {
+        if (parseInt(response) === 201) {
           this.update_transcripts();
+        } else if (parseInt(response) === 208) {
+          this.createAlert(
+            'Could Not Process',
+            'An application is under review',
+          );
+        } else {
+          response = response[-1];
         }
-        console.log('in transcript resp: ', response);
       })
       .catch((error) => {
         console.log(error);
@@ -157,14 +166,12 @@ class Transcripts extends React.Component {
   }
 
   async update_transcripts() {
-    console.log('in update');
     get_transcripts_api_call(this.props.user.user_info['token'])
       .then((response) => {
         if (response === 'error') {
           response = response[-1];
         }
         this.setState({data: response});
-        console.log(this.state.data);
       })
       .catch((error) => {
         console.log('err', error);

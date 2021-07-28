@@ -65,7 +65,6 @@ axios.post(`${API_BASE}/api/student/applications/`,{}, generateHeaders(localStor
 */
 
 export const add_transcripts_api_call = async (token) => {
-  console.log('in add');
   var myHeaders = new Headers();
   myHeaders.append('Authorization', 'Token ' + token);
 
@@ -75,12 +74,8 @@ export const add_transcripts_api_call = async (token) => {
     redirect: 'follow',
   };
 
-  response = await fetch(
-    'https://transcripts-app.herokuapp.com/api/student/applications/',
-    requestOptions,
-  )
+  response = await fetch(add_transcript_url, requestOptions)
     .then((response) => {
-      console.log('in api resp: ', response.status);
       var status = response.status;
       return status;
     })
@@ -92,7 +87,6 @@ export const add_transcripts_api_call = async (token) => {
 };
 
 export const get_transcripts_api_call = async (token) => {
-  console.log('in method');
   var myHeaders = new Headers();
   myHeaders.append('Authorization', 'Token ' + token);
 
@@ -102,10 +96,7 @@ export const get_transcripts_api_call = async (token) => {
     redirect: 'follow',
   };
 
-  response = await fetch(
-    'https://transcripts-app.herokuapp.com/api/student/applications/',
-    requestOptions,
-  )
+  response = await fetch(add_transcript_url, requestOptions)
     .then((response) => response.text())
     .then((result) => {
       return JSON.parse(result);
