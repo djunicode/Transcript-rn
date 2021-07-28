@@ -1,5 +1,13 @@
 import React from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -8,114 +16,166 @@ import {connect} from 'react-redux';
 import {Card} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Header from './../../components/header';
+import {
+  get_transcripts_api_call,
+  add_transcripts_api_call,
+} from '../../API/api';
 
-const Grid = (props) => {
-  return(
-    <Image source={require('./../../Assets/transcript_grid_item.png')} style={{width:wp('40%'), height:hp('20%')}}/>
-  )
-}
+const Grid = () => {
+  return (
+    <Image
+      source={require('./../../Assets/transcript_grid_item.png')}
+      style={{width: wp('40%'), height: hp('20%')}}
+    />
+  );
+};
 
-class T_Item extends React.Component{
-
-  render(){
-
-    switch(this.props.len){
-
+class T_Item extends React.Component {
+  render() {
+    switch (this.props.len) {
+      case 0:
+        return (
+          <View style={styles.container}>
+            <Text>Empty</Text>
+          </View>
+        );
       case 1:
-        return(
-          <View style={{
+        return (
+          <View
+            style={{
               flexDirection: 'row',
               justifyContent: 'space-evenly',
               alignItems: 'center',
               marginTop: hp('3%'),
             }}>
-            <Grid/>
-            <View style={{width:wp('40%'), height:hp('20%')}}></View>
+            <Grid />
+            <View style={{width: wp('40%'), height: hp('20%')}}></View>
           </View>
-        )
+        );
 
       case 2:
-        return(
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            marginTop: hp('3%'),
-          }}>
-            <Grid/>
-            <Grid/>
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              marginTop: hp('3%'),
+            }}>
+            <Grid />
+            <Grid />
           </View>
-        )
+        );
 
       case 3:
-        return(
+        return (
           <View>
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            marginTop: hp('3%'),
-          }}>
-            <Grid/>
-            <Grid/>
-          </View>
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            marginTop: hp('3%'),
-          }}>
-            <Grid/>
-            <View style={{width:wp('40%'), height:hp('20%')}}></View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: hp('3%'),
+              }}>
+              <Grid />
+              <Grid />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: hp('3%'),
+              }}>
+              <Grid />
+              <View style={{width: wp('40%'), height: hp('20%')}}></View>
             </View>
           </View>
-        )
+        );
 
-        case 4:
-          return(
-            <View>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              marginTop: hp('3%'),
-            }}>
-              <Grid/>
-              <Grid/>
+      case 4:
+        return (
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: hp('3%'),
+              }}>
+              <Grid />
+              <Grid />
             </View>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              marginTop: hp('3%'),
-            }}>
-              <Grid/>
-              <Grid/>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: hp('3%'),
+              }}>
+              <Grid />
+              <Grid />
             </View>
-            </View>
-          )
-      
+          </View>
+        );
+
       default:
-        return(<View></View>)
+        return (
+          <View style={styles.container}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        );
     }
-
   }
-
 }
 
-class Transcripts extends React.Component{
-
+class Transcripts extends React.Component {
   state = {
-    data : [{}, {}, {}, {}]
-  }
+    //data: [{}, {}, {}, {}],
+    data: [{}, {}, {}, {}, {}],
+  };
 
   add_transcript = () => {
-    console.log('hi')
+    console.log('add');
+    add_transcripts_api_call(this.props.user.user_info['token'])
+      .then((response) => {
+        if (response === 'error') {
+          response = response[-1];
+        }
+        if (parseInt(response) < 300) {
+          this.update_transcripts();
+        }
+        console.log('in transcript resp: ', response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  async componentDidMount() {
+    await this.update_transcripts();
   }
 
-  render(){
+  async update_transcripts() {
+    console.log('in update');
+    get_transcripts_api_call(this.props.user.user_info['token'])
+      .then((response) => {
+        if (response === 'error') {
+          response = response[-1];
+        }
+        this.setState({data: response});
+        console.log(this.state.data);
+      })
+      .catch((error) => {
+        console.log('err', error);
+        this.setState({data: ''});
+      });
+  }
+
+  render() {
     return (
-      <View style={{flex: 1, backgroundColor: this.props.color.background_init}}>
+      <View
+        style={{flex: 1, backgroundColor: this.props.color.background_init}}>
         <Header title="Dashboard" />
         <View
           style={{
@@ -143,14 +203,10 @@ class Transcripts extends React.Component{
             </Text>
           </TouchableOpacity>
         </View>
-        
-        
 
-        <T_Item len={this.state.data.length} data={this.state.data}/>
+        <T_Item len={this.state.data.length} data={this.state.data} />
 
-
-
-        <View style={{bottom:0, position:'absolute', marginBottom:hp('4%')}}>
+        <View style={{bottom: 0, position: 'absolute', marginBottom: hp('4%')}}>
           <TouchableOpacity onPress={this.add_transcript}>
             <AntDesign
               name="pluscircle"
@@ -164,7 +220,7 @@ class Transcripts extends React.Component{
               textAlign: 'center',
               fontSize: wp('8%'),
               color: this.props.color.text,
-              marginTop: hp('2%')
+              marginTop: hp('2%'),
             }}>
             Add New Transcript
           </Text>
@@ -172,13 +228,19 @@ class Transcripts extends React.Component{
       </View>
     );
   }
-
 }
 
 const msp = (state) => ({
   color: state.color,
+  user: state.user,
 });
 
 export default connect(msp, {})(Transcripts);
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

@@ -64,6 +64,63 @@ axios.post(`${API_BASE}/api/student/applications/`,{}, generateHeaders(localStor
 
 */
 
+export const add_transcripts_api_call = async (token) => {
+  console.log('in add');
+  var myHeaders = new Headers();
+  myHeaders.append('Authorization', 'Token ' + token);
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+
+  response = await fetch(
+    'https://transcripts-app.herokuapp.com/api/student/applications/',
+    requestOptions,
+  )
+    .then((response) => {
+      console.log('in api resp: ', response.status);
+      var status = response.status;
+      return status;
+    })
+    .catch((error) => {
+      console.log('error', error);
+      return error;
+    });
+  return response;
+};
+
+export const get_transcripts_api_call = async (token) => {
+  console.log('in method');
+  var myHeaders = new Headers();
+  myHeaders.append('Authorization', 'Token ' + token);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow',
+  };
+
+  response = await fetch(
+    'https://transcripts-app.herokuapp.com/api/student/applications/',
+    requestOptions,
+  )
+    .then((response) => response.text())
+    .then((result) => {
+      return JSON.parse(result);
+    })
+    .then((result) => {
+      return result['application']['application'];
+    })
+    .catch((error) => {
+      console.log('error', error);
+      return 'error';
+    });
+
+  return response;
+};
+
 export const scan_marksheet = async (token, file, sem) => {
   var data = new FormData();
   data.append('file', file);
@@ -112,16 +169,6 @@ export const login_api_call = async (email, password) => {
     },
   );
   console.log(response.data);
-  return response;
-};
-
-export const get_transcripts_api_call = async (token) => {
-  let response = await axios.get(add_transcript_url, {
-    headers: {
-      Authorization: 'Token ' + token,
-    },
-  });
-  console.log(response);
   return response;
 };
 
